@@ -1,4 +1,5 @@
 NAME = cub3D
+ARGS =	""
 
 INCLUDES = -I ./libft/ -I ./MLX42/include/MLX42/ -I ./
 SRC = ""
@@ -11,10 +12,12 @@ CFLAGS = -Wall -Wextra -Werror
 MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
 RM = rm -f
 
+
 MLX42 = ./MLX42/
 LIBFT_DIR = ./libft/
 MLX_DIR = ./MLX42/build/
 
+# 	Colors
 CYAN = '\033[1;36m'
 RED = '\033[0;31m'
 RESET_COLOR = '\033[0;0m'
@@ -50,4 +53,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+leak: re
+	@echo $(RED) Checking leaks ... $(RESET_COLOR)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes ./$(NAME) $(ARGS)
+
+.PHONY: all clean fclean re leak
