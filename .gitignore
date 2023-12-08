@@ -1,0 +1,12 @@
+#ignore all
+*
+
+# Except
+!Makefile
+
+
+
+
+
+
+!.gitignore
