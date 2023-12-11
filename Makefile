@@ -1,21 +1,28 @@
 NAME = cub3D
 ARGS =	""
 
-INCLUDES = -I ./libft/ -I ./MLX42/include/MLX42/ -I ./
-SRC = ""
+INCLUDES = -I ./libft/ -I ./MLX42/include/MLX42/ -I ./ -I ./src/ -I ./include
+SRC = 			main.c \
 
-LIBFT = libft/libft.a
-LIBMLX = $(MLX_DIR)libmlx42.a
+#	Directories
+LIB_DIR = lib/
+SRC_DIR	= src/
+MLX_DIR = $(LIB_DIR)MLX42/
+MLX_BUILD_DIR = $(MLX_DIR)build/
+LIBFT_DIR = $(LIB_DIR)libft/
+
+#	Libraries
+LIBFT = $(LIBFT_DIR)libft.a
+MLX42 = $(MLX_BUILD_DIR)libmlx42.a
+
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
 RM = rm -f
+MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
 
-
-MLX42 = ./MLX42/
-LIBFT_DIR = ./libft/
-MLX_DIR = ./MLX42/build/
+SRCS = $(SRC_DIR)$(SRC)
+LIBS = $(MLX_DIR) $(LIBFT)
 
 # 	Colors
 CYAN = '\033[1;36m'
@@ -24,14 +31,14 @@ RESET_COLOR = '\033[0;0m'
 
 all: $(NAME)
 
-$(NAME):  $(MLX42) $(SRC) $(LIBFT)
-	@make -C $(MLX_DIR)
-	@$(CC) $(CFLAGS) $(SRC) $(LIBMLX) $(LIBFT) $(MLXFL) $(INCLUDES) -o $(NAME)
+$(NAME): $(LIBS) $(SRCS) 
+	@make -C $(MLX_BUILD_DIR)
+	@$(CC) $(CFLAGS) $(SRCS) $(MLX42) $(LIBFT) $(MLXFL) $(INCLUDES) -o $(NAME)
 	@ echo $(CYAN) cub3D created! $(RESET_COLOR)
 
-$(MLX42):
-	git clone https://github.com/codam-coding-college/MLX42.git ./MLX42
-	@(cd ./MLX42 && cmake -B build && cmake --build build -j4)
+$(MLX_DIR):
+	git clone https://github.com/codam-coding-college/MLX42.git $(LIB_DIR)MLX42
+	@(cd $(LIB_DIR)/MLX42 && cmake -B build && cmake --build build -j4)
 
 $(LIBFT): 
 	@$(MAKE) -C $(LIBFT_DIR)
@@ -41,9 +48,10 @@ clean:
 	@echo $(RED) object files deleted! 🗑️ $(RESET_COLOR)
 
 mlx_clean:
-	@if [ -d "$(MLX42)" ]; then \
-		make -C $(MLX_DIR) clean; \
+	@if [ -d "$(MLX_DIR)" ]; then \
+		make -C $(MLX_BUILD_DIR) clean; \
 	fi
+	@rm -rf $(MLX_DIR)
 	
 fclean: clean
 	@$(MAKE) mlx_clean

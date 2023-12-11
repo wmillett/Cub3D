@@ -4,9 +4,14 @@
 # Except
 !Makefile
 
+!src/
+!*.c
 
+!include/
+!*.h
 
-
+!lib/
+!lib/libft/
 
 
 !.gitignore
