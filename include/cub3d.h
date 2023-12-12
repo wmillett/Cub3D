@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
+# include "MLX42.h"
 
 //	Errors
 #define ERROR -1
@@ -20,7 +21,7 @@
 //	Structs
 typedef struct s_cube
 {
-	
+
 }	t_cube;
 
 //	Function prototypes
@@ -29,6 +30,7 @@ t_cube	*get_cube();
 
 int	cub_verification(char *path);
 void ft_error(char *message);
+
 
 
 #endif
