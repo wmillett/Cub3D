@@ -13,5 +13,7 @@
 !lib/
 !lib/libft/
 
+!maps/
+!*.cub
 
 !.gitignore

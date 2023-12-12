@@ -1,12 +1,15 @@
 NAME = cub3D
-ARGS =	""
+MAP = "" 
 
-INCLUDES = -I ./libft/ -I ./MLX42/include/MLX42/ -I ./ -I ./src/ -I ./include
-SRC = 			main.c \
+INCLUDES = -I ./lib/libft/ -I ./lib/MLX42/include/MLX42/ -I ./ -I ./src/ -I ./include
+SRCS = 	src/main.c \
+		src/parsing.c \
+		src/errors.c \
 
 #	Directories
 LIB_DIR = lib/
 SRC_DIR	= src/
+MAP_DIR = maps/
 MLX_DIR = $(LIB_DIR)MLX42/
 MLX_BUILD_DIR = $(MLX_DIR)build/
 LIBFT_DIR = $(LIB_DIR)libft/
@@ -17,16 +20,16 @@ MLX42 = $(MLX_BUILD_DIR)libmlx42.a
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 RM = rm -f
 MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
 
-SRCS = $(SRC_DIR)$(SRC)
 LIBS = $(MLX_DIR) $(LIBFT)
 
 # 	Colors
 CYAN = '\033[1;36m'
 RED = '\033[0;31m'
+GREEN = '\033[0;32m'
 RESET_COLOR = '\033[0;0m'
 
 all: $(NAME)
@@ -45,7 +48,7 @@ $(LIBFT):
 				
 clean: 
 	@$(MAKE) clean -C $(LIBFT_DIR)
-	@echo $(RED) object files deleted! 🗑️ $(RESET_COLOR)
+	@echo $(RED) object files deleted! $(RESET_COLOR)
 
 mlx_clean:
 	@if [ -d "$(MLX_DIR)" ]; then \
@@ -57,12 +60,16 @@ fclean: clean
 	@$(MAKE) mlx_clean
 	@$(RM) $(NAME)
 	@$(MAKE) fclean -C $(LIBFT_DIR)
-	@echo $(RED) cub3D,libft.a and mlx files deleted! 🗑️ $(RESET_COLOR)
+	@echo $(RED) cub3D,libft.a and mlx files deleted! $(RESET_COLOR)
 
 re: fclean all
 
 leak: re
-	@echo $(RED) Checking leaks ... $(RESET_COLOR)
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes ./$(NAME) $(ARGS)
+	@echo $(GREEN) Checking leaks ... $(RESET_COLOR)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes ./$(NAME) $(MAP_DIR)$(MAP)
 
-.PHONY: all clean fclean re leak
+run: all
+	@echo $(GREEN) "Executing cub3d ..." $(RESET_COLOR)
+	@./$(NAME) $(MAP_DIR)$(MAP)
+
+.PHONY: all clean mlx_clean fclean re leak run
