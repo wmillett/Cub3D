@@ -29,6 +29,7 @@
 #define NO_POS "There is no player start position"
 
 #define NO_TEXT "Texture does not exist"
+#define BAD_COLOR "Error in the color code"
 
 //	Colors ----------------------------------------------------
 #define RED "\033[0;31m"
