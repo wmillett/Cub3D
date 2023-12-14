@@ -14,7 +14,7 @@ void set_cube_struct(t_cube* cube)
 	cube->buffer = NULL;
 	cube->copy = NULL;
 	cube->content = NULL;
-	cube->split = NULL;
+	cube->tokens = NULL;
 	cube->map = NULL;	
 }
 

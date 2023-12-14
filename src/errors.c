@@ -34,8 +34,8 @@ void ft_free_all(t_cube	*cube)
 		free(cube->copy);
 	if(cube->content)
 		free(cube->content);
-	if(cube->split)
-		free_table(cube->split);
+	if(cube->tokens)
+		free_table(cube->tokens);
 	if(cube->map)
 		free_table(cube->map);
 }

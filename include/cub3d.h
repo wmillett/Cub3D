@@ -6,17 +6,29 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdbool.h>
+
 #include "libft.h"
 # include "MLX42.h"
 
 //	Errors ----------------------------------------------------
 #define ERROR -1
 #define SUCESS 0
+
 #define NOT_CUB "The file is not a .cub"
 #define NO_MAP "Please pass one map as argument"
+
 #define FD_ERROR "File does not exist or an error occured when oppening it"
 #define MALLOC_ERROR "Error when allocating memory from heap"
 #define READ_ERROR "Error when reading file"
+
+#define MAP_NOT_END "Map is not at the end of the file"
+#define WEIRD_CHAR "Map must contains only '0' '1' 'N' 'S' 'W' 'E' characters"  
+#define MAP_OPEN "Playable map is not enclosed with walls"
+#define MANY_POS "There's more than one player start position"
+#define NO_POS "There is no player start position"
+
+#define NO_TEXT "Texture does not exist"
 
 //	Colors ----------------------------------------------------
 #define RED "\033[0;31m"
@@ -27,13 +39,17 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# define SPLIT_SEP 29
+
 // ENUM
-enum e_orien
+enum e_id
 {
-	N,
-	S,
-	E,
-	w,
+	NO,
+	SO,
+	EA,
+	WE,
+	C,
+	F,
 };  
 
 //	Structs ----------------------------------------------------
@@ -44,9 +60,15 @@ typedef struct s_cube
 	char	*content;
 	char	*copy;
 	char	*buffer;
-	char	**split;
+	char	**tokens;
 	char	**map;
 	int		orientation;
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	
+
 
 }	t_cube;
 
