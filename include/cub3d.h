@@ -68,6 +68,12 @@ typedef struct s_cube
 	char	*so_path;
 	char	*we_path;
 	char	*ea_path;
+	int		c_red;
+	int		c_green;
+	int		c_blue;
+	int		f_red;
+	int		f_green;
+	int		f_blue;
 	
 
 

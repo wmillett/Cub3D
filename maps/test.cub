@@ -1,9 +1,10 @@
-    	 	NO	 . 		 			/ pat   h_to_the_	north_text 	ure     arsdf 
+    	 	NO 	 . 		 			/ pat   h_to_the_	north_text 	ure     arsdf  
 SO ./path_to_the_south_texture 
 WE ./path_to_the_west_texture  1
 EA ./path_to_the_east_texture
 
-F 220,100,0
+
+    F 21,41,234
 1
 C 225,30,0
 

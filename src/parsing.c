@@ -43,38 +43,7 @@ int	is_whitespace(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-// char    *remove_wspaces2(char*line)
-// {
-// 	int len;
-// 	int i;
-// 	char *new_line;
 
-// 	new_line = NULL;
-// 	i = 0;
-// 	len = 0;
-// 	while(line[i])
-// 	{
-// 		if(is_whitespace(line[i]) == false)
-// 			len++;
-// 		i++;
-// 	}
-// 	new_line = malloc(sizeof(char) * (len + 1));
-// 	if(!new_line)
-// 		return NULL;
-// 	new_line[len] = '\0';
-// 	i = 0;
-// 	len = 0;
-// 	while(line[i])
-// 	{
-// 		if(is_whitespace(line[i]) == false)
-// 		{
-// 			new_line[len] = line[i];
-// 			len++;
-// 		}
-// 		i++;
-// 	}
-// 	return new_line;
-// }
 char	*remove_wspaces(char *line)
 {
 	char	**split;
@@ -121,7 +90,33 @@ void add_path(char *path, enum e_id id)
 		get_cube()->we_path = path;
 }
 
-void add_color_code(char *code, enum e_id id)
+void add_color_code(enum e_id id, int n, int i)
+{
+	t_cube *cube = get_cube();
+
+	//printf("%d\n",n);
+
+	if(id == C)
+	{
+		if(i == 0)	
+			cube->c_red = n;
+		if(i == 1)	
+			cube->c_green = n;
+		if(i == 2)	
+			cube->c_blue = n;	
+	}
+	if(id == F)
+	{
+		if(i == 0)	
+			cube->f_red = n;
+		if(i == 1)	
+			cube->f_green = n;
+		if(i == 2)	
+			cube->f_blue = n;	
+	}
+}
+
+void parse_color_code(char *code, enum e_id id)
 {
 	int i;
 	char **split;
@@ -151,9 +146,11 @@ void add_color_code(char *code, enum e_id id)
 		n = ft_atoi(split[i]);
 		if(n > 255)
 			ft_error(BAD_COLOR);
-		
+		add_color_code(id,n,i); 
 		i++;
 	}
+	if(i != 3)
+		ft_error(BAD_COLOR);
 	
 }
 
@@ -178,9 +175,9 @@ void loop_line(char *line)
 			if(line[i] == 'W' && line[i + 1] == 'E')
 				add_path(remove_wspaces(line) + 2, WE);
 			if(line[i] == 'C')
-				add_color_code(remove_wspaces(line) + 1, C);
+				parse_color_code(remove_wspaces(line) + 1, C);
 			if(line[i] == 'F')
-				add_color_code(remove_wspaces(line) + 1, F);
+				parse_color_code(remove_wspaces(line) + 1, F);
 		}
 		i++;
 	
@@ -193,10 +190,9 @@ void store_file(t_cube*cube)
 	cube->tokens = ft_split(cube->content,'\n');
 	if(!cube->tokens)
 		ft_error(MALLOC_ERROR);
-	loop_line(cube->tokens[3]);
+	loop_line(cube->tokens[6]);
 
-	//printf("%s\n",get_cube()->ea_path);
-	printf("%d\n",ft_atoi("-3,4"));
+	printf("here %d\n",get_cube()->c_blue);
 	//cube->content = ft_free(cube->content);
 	//print_tab(cube->tokens);
 	//printf("%s\n", remove_wspaces(cube->tokens[0],0));
