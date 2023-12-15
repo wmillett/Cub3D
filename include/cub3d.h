@@ -27,12 +27,15 @@
 #define MAP_OPEN "Playable map is not enclosed with walls"
 #define MANY_POS "There's more than one player start position"
 #define NO_POS "There is no player start position"
+#define MAP_NOT "Map description not found"
 
 #define NO_TEXT "Texture does not exist"
+#define EXISTS "Element exists already"
 #define BAD_COLOR "Error in the color code"
-
+#define MORE_255 "Number higher than 255"
+#define MISSING "Some informations are missing"
 #define RANDOM "Random informations"
-#define MISS_INFO "Some informations are missing"
+
 
 //	Colors ----------------------------------------------------
 #define RED "\033[0;31m"
@@ -77,7 +80,7 @@ typedef struct s_cube
 	int		f_red;
 	int		f_green;
 	int		f_blue;
-	
+	bool 	found_map;
 
 
 }	t_cube;

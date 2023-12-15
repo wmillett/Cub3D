@@ -78,22 +78,42 @@ char	*remove_wspaces(char *line)
 
 void add_path(char *path, enum e_id id)
 {
+	t_cube *cube;
+	
+	cube = get_cube();
 	if(access(path, R_OK) != 0)
 		ft_error(NO_TEXT);
 	if(id == NO)
-		get_cube()->no_path = path;
+	{
+		if(cube->no_path)
+			ft_error(EXISTS);
+		cube->no_path = path;
+	}
 	if(id == SO)
-		get_cube()->so_path = path;
+	{
+		if(cube->so_path)
+			ft_error(EXISTS);
+		cube->so_path = path;
+	}
 	if(id == EA)
-		get_cube()->ea_path = path;
+	{
+		if(cube->ea_path)
+			ft_error(EXISTS);
+		cube->ea_path = path;
+	}
 	if(id == WE)
-		get_cube()->we_path = path;
+	{
+		if(cube->we_path) //initialize to null at first
+			ft_error(EXISTS);
+		cube->we_path = path;
+	}
 }
 
 void add_color_code(enum e_id id, int n, int i)
 {
-	t_cube *cube = get_cube();
-
+	t_cube *cube;
+	
+	cube = get_cube();
 	if(id == C)
 	{
 		if(i == 0)	
@@ -116,6 +136,8 @@ void add_color_code(enum e_id id, int n, int i)
 
 void parse_color_code(char *code, enum e_id id)
 {
+	static int c_count = 0;
+	static int f_count = 0;
 	int i;
 	char **split;
 	int n;
@@ -123,6 +145,12 @@ void parse_color_code(char *code, enum e_id id)
 	n = 0;
 	split = NULL;
 	i = 0;
+	if(id == C)
+		c_count++;
+	if(id == F)
+		f_count++;
+	if(c_count > 1 || f_count > 1)
+		ft_error(EXISTS);
 	while(code[i] && ft_isdigit(code[i]) == true)
 		i++;
 	if(code[i] == ',')
@@ -143,7 +171,7 @@ void parse_color_code(char *code, enum e_id id)
 	{
 		n = ft_atoi(split[i]);
 		if(n > 255)
-			ft_error(BAD_COLOR);
+			ft_error(MORE_255);
 		add_color_code(id,n,i); 
 		i++;
 	}										
@@ -162,6 +190,11 @@ void loop_line(char *line)
 			i++;
 		if(line[i])
 		{
+			if(line[i] == '1' || line[i] == '0')
+			{
+				get_cube()->found_map = true;
+				return ;
+			}
 			if(line[i] == 'N' && line[i + 1] == 'O')
 				return add_path(remove_wspaces(line) + 2, NO);
 			if(line[i] == 'S' && line[i + 1] == 'O')
@@ -182,6 +215,34 @@ void loop_line(char *line)
 		i++;
 	}
 }
+
+void tokens_loop(char **tokens)
+{
+	t_cube *cube;
+	int i;
+	
+	cube = get_cube();
+	cube->found_map == false;
+	i = 0;
+	while(tokens[i])
+	{
+		loop_line(tokens[i]);
+		if(cube->found_map == true)
+			break ;
+		i++;
+	}
+	if(!cube->no_path || !cube->so_path || !cube->ea_path 
+		|| !cube->we_path || cube->c_red == -1 || cube->c_green == -1 
+		|| cube->c_blue == -1 || cube->f_red == -1 || cube->f_green == -1 
+		|| cube->f_blue == -1)
+		ft_error(MAP_NOT_END);
+	if(cube->found_map == false)
+		ft_error(MAP_NOT);
+	// check if weird characters in map
+	// check if only one player position
+	// flood fill
+}
+
 void store_file(t_cube*cube)
 {
 	read_file(cube);
@@ -191,7 +252,7 @@ void store_file(t_cube*cube)
 		ft_error(MALLOC_ERROR);
 	//print_tab(cube->tokens);
 	//printf("here: %s\n", cube->tokens[5]);
-	loop_line(cube->tokens[5]);
+	tokens_loop(cube->tokens);
 	
 	//printf("here %d\n",get_cube()->c_blue);
 	//cube->content = ft_free(cube->content);
