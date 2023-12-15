@@ -31,6 +31,9 @@
 #define NO_TEXT "Texture does not exist"
 #define BAD_COLOR "Error in the color code"
 
+#define RANDOM "Random informations"
+#define MISS_INFO "Some informations are missing"
+
 //	Colors ----------------------------------------------------
 #define RED "\033[0;31m"
 #define WHITE "\033[0;0m"

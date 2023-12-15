@@ -94,8 +94,6 @@ void add_color_code(enum e_id id, int n, int i)
 {
 	t_cube *cube = get_cube();
 
-	//printf("%d\n",n);
-
 	if(id == C)
 	{
 		if(i == 0)	
@@ -148,10 +146,9 @@ void parse_color_code(char *code, enum e_id id)
 			ft_error(BAD_COLOR);
 		add_color_code(id,n,i); 
 		i++;
-	}
+	}										
 	if(i != 3)
 		ft_error(BAD_COLOR);
-	
 }
 
 void loop_line(char *line)
@@ -159,28 +156,30 @@ void loop_line(char *line)
 	int i;
 
 	i = 0;
-	
 	while(line[i])
 	{
-		if(is_whitespace(line[i]) == true)
+		while(line[i] && is_whitespace(line[i]) == true)
 			i++;
-		if(line[i]) //use switch case if norminette allows it
+		if(line[i])
 		{
 			if(line[i] == 'N' && line[i + 1] == 'O')
-				add_path(remove_wspaces(line) + 2, NO);
+				return add_path(remove_wspaces(line) + 2, NO);
 			if(line[i] == 'S' && line[i + 1] == 'O')
-				add_path(remove_wspaces(line) + 2, SO);
+				return add_path(remove_wspaces(line) + 2, SO);
 			if(line[i] == 'E' && line[i + 1] == 'A')
-				add_path(remove_wspaces(line) + 2, EA);
+				return add_path(remove_wspaces(line) + 2, EA);
 			if(line[i] == 'W' && line[i + 1] == 'E')
-				add_path(remove_wspaces(line) + 2, WE);
+				return add_path(remove_wspaces(line) + 2, WE);
 			if(line[i] == 'C')
-				parse_color_code(remove_wspaces(line) + 1, C);
+				return parse_color_code(remove_wspaces(line) + 1, C);
 			if(line[i] == 'F')
-				parse_color_code(remove_wspaces(line) + 1, F);
+				return parse_color_code(remove_wspaces(line) + 1, F);
+			else
+			 	ft_error(RANDOM);
 		}
+		else
+			return ;
 		i++;
-	
 	}
 }
 void store_file(t_cube*cube)
@@ -190,11 +189,12 @@ void store_file(t_cube*cube)
 	cube->tokens = ft_split(cube->content,'\n');
 	if(!cube->tokens)
 		ft_error(MALLOC_ERROR);
-	loop_line(cube->tokens[6]);
-
-	printf("here %d\n",get_cube()->c_blue);
-	//cube->content = ft_free(cube->content);
 	//print_tab(cube->tokens);
+	//printf("here: %s\n", cube->tokens[5]);
+	loop_line(cube->tokens[5]);
+	
+	//printf("here %d\n",get_cube()->c_blue);
+	//cube->content = ft_free(cube->content);
 	//printf("%s\n", remove_wspaces(cube->tokens[0],0));
 	//add_path(remove_wspaces(cube->tokens[0],0));
 
