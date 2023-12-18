@@ -24,7 +24,7 @@
 
 #define MAP_NOT_END "Map is not at the end of the file"
 #define WEIRD_CHAR "Map must contains only '0' '1' 'N' 'S' 'W' 'E' characters"  
-#define MAP_OPEN "Playable map is not enclosed with walls"
+#define MAP_OPEN "Playable map is not enclosed with walls or has holes on it"
 #define MANY_POS "There's more than one player start position"
 #define NO_POS "There is no player start position"
 #define MAP_NOT "Map description not found"
@@ -59,6 +59,13 @@ enum e_id
 	F,
 };  
 
+enum e_ori
+{
+	N,
+	S,
+	E,
+	W,
+}; 
 //	Structs ----------------------------------------------------
 
 typedef struct s_cube
@@ -69,7 +76,9 @@ typedef struct s_cube
 	char	*buffer;
 	char	**tokens;
 	char	**map;
-	int		orientation;
+	enum e_ori		orientation;
+	int 	start_y;
+	int		start_x;
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;

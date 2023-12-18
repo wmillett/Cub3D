@@ -43,6 +43,12 @@ int	is_whitespace(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
+int is_map_char(char c)
+{
+	return (c == '1' || c == '0' || c == 'N'
+	|| c == 'S' || c == 'W' || c == 'E');
+}
+
 
 char	*remove_wspaces(char *line)
 {
@@ -184,7 +190,7 @@ void loop_line(char *line)
 	int i;
 
 	i = 0;
-	while(line[i])
+	while(line[i]) //can remove that loop
 	{
 		while(line[i] && is_whitespace(line[i]) == true)
 			i++;
@@ -216,13 +222,62 @@ void loop_line(char *line)
 	}
 }
 
+int find_map_start(char *content)
+{
+	int i;
+	int start;
+
+	i = 0;
+	start = 0;
+	while(content[i])
+	{
+		if(content[i] == '\n')
+		{
+			i++;
+			start = i;
+			//printf("%d\n", i);
+			while(content[i] && is_whitespace(content[i]) == true && content[i] != 10)
+				i++;
+			//printf("%d\n", i);
+			if(content[i] == '0' || content[i] == '1')
+				return start; 
+		}
+		else
+			i++;
+	}
+	return -1;
+}
+
+void validate_map(char *content)
+{
+	static int count = 0;
+	int i;
+
+	
+	i = 0;
+	while(content[i]) 
+	{
+		if(count > 1)
+			ft_error(MANY_POS);
+		if(content[i] == 'N'|| content[i]  == 'S' 
+			|| content[i]  == 'W' || content[i]  == 'E')
+			count++;
+		if(is_whitespace(content[i]) == false && (content[i] != '1' && content[i] != '0' 
+		&& content[i] != 'N' && content[i] != 'S' && content[i]  != 'W' && content[i] != 'E'))
+			ft_error(WEIRD_CHAR);
+		i++;
+	}
+	if(count == 0)
+		ft_error(NO_POS);
+
+}
 void tokens_loop(char **tokens)
 {
 	t_cube *cube;
 	int i;
 	
 	cube = get_cube();
-	cube->found_map == false;
+	cube->found_map = false;
 	i = 0;
 	while(tokens[i])
 	{
@@ -238,11 +293,162 @@ void tokens_loop(char **tokens)
 		ft_error(MAP_NOT_END);
 	if(cube->found_map == false)
 		ft_error(MAP_NOT);
+	
 	// check if weird characters in map
 	// check if only one player position
+	// include what is on same line before start map
 	// flood fill
 }
 
+
+char** get_map2(char *content)
+{
+	int count = 0;
+	//int len = 0;
+	int max = 0;
+	char **split;
+	//char *substr;
+	int i;
+
+	i = 0;
+	split = NULL;
+	int tabcount = 0; 
+	while(content[i])
+	{
+		//len = i;
+		tabcount = 0;
+		while(content[i] && content[i] != '\n')
+		{
+			if(content[i] == '\t')
+			{
+				tabcount += 3 - ((tabcount  ) % 4);
+				//len -= tabcount - 1; 
+
+			}
+			tabcount++;
+			i++;
+		}
+		if(content[i] == '\n')
+			count++;
+		//len = tabcount - len;
+		if(tabcount > max)
+			max = tabcount;
+		i++;
+		
+	}
+	//printf("tab %d\n",tabcount);
+	split = malloc(sizeof(char*) * (count + 2));
+	split[count + 1] = NULL;
+	printf("count: %d len: %d\n",count,max);
+	
+	i = 0;
+	while(i < count + 1)
+	{
+		split[i] = malloc(sizeof(char) * (max + 1));
+		split[i][max] = 0;
+		ft_memset(split[i],'-',max);
+		i++;
+	}
+	print_tab(split);
+	printf("\n");
+	i = 0;
+	int j = 0;
+	max = 0;
+//	len = 0;
+	while(content[i])
+	{
+		
+		j = 0;
+		tabcount = 0;
+		while(content[i] && content[i] != '\n')
+		{
+			if(content[i] == '\t')
+				j += (4 - ((j ) % 4) -1 ); 
+			if(is_whitespace(content[i]) == false)
+				split[max][j] = content[i];
+			j++;
+			i++;
+			
+		}
+		if(content[i] == '\n')
+			max++;
+		i++;
+	}
+	return split;
+}
+
+
+	//tab == 4 spaces
+	/*int j = 0;
+	while(content[i])
+	{
+		
+		
+		while(content[i] && content[i] != '\n')
+		{
+			if(is_whitespace(content[i]) && content[i] != '\n')
+				content[i] = 'x';
+			
+			i++;
+		}
+		while()
+		
+		i++;
+	}*/
+
+
+
+void flood_fill(t_cube *cube, int y, int x)
+{
+	if(cube->map[y][x] == '-')
+		ft_error(MAP_OPEN);
+	if(cube->map[y][x] == '0')
+		cube->map[y][x] = 'X';
+	if(cube->map[y][x + 1] && cube->map[y][x + 1] != '1' && cube->map[y][x + 1] != 'X')
+		flood_fill(cube,y,x+1);
+	if(cube->map[y][x - 1] && cube->map[y][x - 1]!= '1' && cube->map[y][x - 1] != 'X')
+		flood_fill(cube,y,x-1);
+	if(cube->map[y + 1][x] && cube->map[y + 1][x] != '1' && cube->map[y + 1][x] != 'X')
+		flood_fill(cube,y + 1,x);
+	if(cube->map[y - 1][x] && cube->map[y - 1][x] != '1' && cube->map[y - 1][x] != 'X')
+		flood_fill(cube,y - 1,x);
+	
+}
+
+void find_position(char **map)
+{
+	t_cube *cube = get_cube();
+	int y;
+	int x;
+
+	x = 0;
+	y = 0;
+	while(map[y])
+	{
+		x = 0;
+		while(map[y][x])
+		{
+			if(is_map_char(map[y][x]) == true && map[y][x] != '1'
+			&& map[y][x] != '0')
+			{
+				if(map[y][x] == 'N')
+					cube->orientation = N;
+				if(map[y][x] == 'S')
+					cube->orientation = S;
+				if(map[y][x] == 'E')
+					cube->orientation = E;
+				if(map[y][x] == 'W')
+					cube->orientation = W;
+				cube->start_x = x;
+				cube->start_y = y;
+				return ;
+			}
+			
+			x++;
+		}
+		y++;
+	}
+}
 void store_file(t_cube*cube)
 {
 	read_file(cube);
@@ -252,50 +458,30 @@ void store_file(t_cube*cube)
 		ft_error(MALLOC_ERROR);
 	//print_tab(cube->tokens);
 	//printf("here: %s\n", cube->tokens[5]);
-	tokens_loop(cube->tokens);
 	
+	//tokens_loop(cube->tokens);
+	//printf("%s\n",cube->content + find_map_start(cube->content));
+	//validate_map(cube->content + find_map_start(cube->content));
+	 
+	char *map_content = cube->content + find_map_start(cube->content);
+	
+	//print_tab(get_map2(map_content));
+	cube->map = get_map2(map_content);
+	find_position(cube->map);
+	printf("enum %d y %d x %d\n", cube->orientation, cube->start_y,cube->start_x);
+	flood_fill(cube,cube->start_y,cube->start_x);
+	print_tab(cube->map);
 	//printf("here %d\n",get_cube()->c_blue);
 	//cube->content = ft_free(cube->content);
 	//printf("%s\n", remove_wspaces(cube->tokens[0],0));
 	//add_path(remove_wspaces(cube->tokens[0],0));
 
-	
+	// flood fill, if a whitespace in playable map, not valid
 
 }
 
-// NO . / pa th     a 1       valid it seems.      5  15  is 515
-// if more than one same texture/color    not valid
-// 1 or 0 in separate line is begining of map
-// others than 1 and 0 in seprate line    not valid
-//check if first 0-1 in separate line is found after all infos are found. after check if other chars in the map
 
 
+//integrate garbage collector and copy libft mallocedfunctions here
 
-
-
-//dont forget to close fd when error
-
-//store all the file in a char**
-//extract infos
-//store the map in a char**
-//free the file char**
-
-
-//partie jouable du joueur doit etre entourer de murs, autour on sen fou si cest ouvert
-//un N,W,E,S
-// zero or many D(doors) for bonus
-
-//instructions peuvent avoir whitespaces around them mais juste ca
-//quand ont trouve soit un 0,1,n,s,e,o la map commence
-//map peut avoir des spaces qui egale des 0. pour la map, tout les strings = len de la plus longue
-// fill avec des spaces le gap apres les strings pour la minimap
-//separer bonus de partie mendatoire
-
-//use acess to test if path is good
-
-//finalement: le NWES peut etre dans nimporte quel ordre, new line defini la fin. les couleurs vont apres, nimporte quel ordre, new line 
-//definie la fin
-// la map est a la fin
-//peut avoir whitespaces
-
-// finalement les spaces egalent pas 0
+//dont forget to check if map is not bigger than screen size

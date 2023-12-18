@@ -20,7 +20,7 @@ MLX42 = $(MLX_BUILD_DIR)libmlx42.a
 
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = #-g -Wall -Wextra -Werror
 RM = rm -f
 
 ifeq ($(shell uname), Linux)

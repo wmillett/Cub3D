@@ -21,6 +21,8 @@ void set_cube_struct(t_cube* cube)
 void print_tab(char**split)
 {
 	int i = 0;
+	if(!split)
+		return ;
 	while(split[i])
 	{
 		printf("%s\n",split[i]);
