@@ -90,6 +90,8 @@ typedef struct s_cube
 	int		f_green;
 	int		f_blue;
 	bool 	found_map;
+	int 	y_size;
+	int		x_size;
 
 
 }	t_cube;

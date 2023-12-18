@@ -255,13 +255,14 @@ void validate_map(char *content)
 
 	
 	i = 0;
+	//printf("%s\n",content);
 	while(content[i]) 
 	{
-		if(count > 1)
-			ft_error(MANY_POS);
 		if(content[i] == 'N'|| content[i]  == 'S' 
 			|| content[i]  == 'W' || content[i]  == 'E')
 			count++;
+		if(count > 1)
+			ft_error(MANY_POS);
 		if(is_whitespace(content[i]) == false && (content[i] != '1' && content[i] != '0' 
 		&& content[i] != 'N' && content[i] != 'S' && content[i]  != 'W' && content[i] != 'E'))
 			ft_error(WEIRD_CHAR);
@@ -304,10 +305,8 @@ void tokens_loop(char **tokens)
 char** get_map2(char *content)
 {
 	int count = 0;
-	//int len = 0;
 	int max = 0;
 	char **split;
-	//char *substr;
 	int i;
 
 	i = 0;
@@ -315,32 +314,31 @@ char** get_map2(char *content)
 	int tabcount = 0; 
 	while(content[i])
 	{
-		//len = i;
 		tabcount = 0;
 		while(content[i] && content[i] != '\n')
 		{
 			if(content[i] == '\t')
 			{
 				tabcount += 3 - ((tabcount  ) % 4);
-				//len -= tabcount - 1; 
-
 			}
+		
 			tabcount++;
 			i++;
 		}
 		if(content[i] == '\n')
 			count++;
-		//len = tabcount - len;
 		if(tabcount > max)
 			max = tabcount;
-		i++;
+		if(content[i])
+			i++;
 		
 	}
-	//printf("tab %d\n",tabcount);
+	//printf("here %d len %d\n",i,(int)ft_strlen(content));
 	split = malloc(sizeof(char*) * (count + 2));
 	split[count + 1] = NULL;
-	printf("count: %d len: %d\n",count,max);
-	
+	//printf("count: %d len: %d\n",count,max);
+	get_cube()->x_size = max;
+	get_cube()->y_size = count;
 	i = 0;
 	while(i < count + 1)
 	{
@@ -349,12 +347,12 @@ char** get_map2(char *content)
 		ft_memset(split[i],'-',max);
 		i++;
 	}
-	print_tab(split);
-	printf("\n");
+	// print_tab(split);
+	// printf("\n");
 	i = 0;
 	int j = 0;
 	max = 0;
-//	len = 0;
+
 	while(content[i])
 	{
 		
@@ -372,7 +370,8 @@ char** get_map2(char *content)
 		}
 		if(content[i] == '\n')
 			max++;
-		i++;
+		if(content[i])
+			i++;
 	}
 	return split;
 }
@@ -400,7 +399,10 @@ char** get_map2(char *content)
 
 void flood_fill(t_cube *cube, int y, int x)
 {
-	if(cube->map[y][x] == '-')
+	//print_tab(cube->map);
+	
+	if(cube->map[y][x] == '-' || x == 0 || y == 0 || x == get_cube()->x_size 
+		|| y == get_cube()->y_size )//change to space
 		ft_error(MAP_OPEN);
 	if(cube->map[y][x] == '0')
 		cube->map[y][x] = 'X';
@@ -408,9 +410,9 @@ void flood_fill(t_cube *cube, int y, int x)
 		flood_fill(cube,y,x+1);
 	if(cube->map[y][x - 1] && cube->map[y][x - 1]!= '1' && cube->map[y][x - 1] != 'X')
 		flood_fill(cube,y,x-1);
-	if(cube->map[y + 1][x] && cube->map[y + 1][x] != '1' && cube->map[y + 1][x] != 'X')
+	if(cube->map[y + 1] && cube->map[y + 1][x] != '1' && cube->map[y + 1][x] != 'X')
 		flood_fill(cube,y + 1,x);
-	if(cube->map[y - 1][x] && cube->map[y - 1][x] != '1' && cube->map[y - 1][x] != 'X')
+	if(cube->map[y - 1] && cube->map[y - 1][x] != '1' && cube->map[y - 1][x] != 'X')
 		flood_fill(cube,y - 1,x);
 	
 }
@@ -451,6 +453,16 @@ void find_position(char **map)
 }
 void store_file(t_cube*cube)
 {
+	cube->no_path = NULL;
+	cube->so_path = NULL;
+	cube->ea_path = NULL;
+	cube->we_path = NULL;
+	cube->c_red = -1;
+	cube->c_green = -1;
+	cube->c_blue = -1;
+	cube->f_red = -1;
+	cube->f_green = -1; 
+	cube->f_blue = -1;
 	read_file(cube);
 	
 	cube->tokens = ft_split(cube->content,'\n');
@@ -459,18 +471,19 @@ void store_file(t_cube*cube)
 	//print_tab(cube->tokens);
 	//printf("here: %s\n", cube->tokens[5]);
 	
-	//tokens_loop(cube->tokens);
+	tokens_loop(cube->tokens);
 	//printf("%s\n",cube->content + find_map_start(cube->content));
-	//validate_map(cube->content + find_map_start(cube->content));
+	validate_map(cube->content + find_map_start(cube->content));
 	 
 	char *map_content = cube->content + find_map_start(cube->content);
 	
 	//print_tab(get_map2(map_content));
 	cube->map = get_map2(map_content);
 	find_position(cube->map);
-	printf("enum %d y %d x %d\n", cube->orientation, cube->start_y,cube->start_x);
+	//printf("enum %d y %d x %d\n", cube->orientation, cube->start_y,cube->start_x);
+	//printf("len %d\n",(int)ft_strlen(cube->map[13]));
 	flood_fill(cube,cube->start_y,cube->start_x);
-	print_tab(cube->map);
+	//print_tab(cube->map);
 	//printf("here %d\n",get_cube()->c_blue);
 	//cube->content = ft_free(cube->content);
 	//printf("%s\n", remove_wspaces(cube->tokens[0],0));
