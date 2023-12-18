@@ -5,6 +5,7 @@ INCLUDES = -I ./lib/libft/ -I ./lib/MLX42/include/MLX42/ -I ./ -I ./src/ -I ./in
 SRCS = 	src/main.c \
 		src/parsing.c \
 		src/errors.c \
+		src/raycasting.c\
 
 #	Directories
 LIB_DIR = lib/
