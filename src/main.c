@@ -14,13 +14,15 @@ void set_cube_struct(t_cube* cube)
 	cube->buffer = NULL;
 	cube->copy = NULL;
 	cube->content = NULL;
-	cube->split = NULL;
+	cube->tokens = NULL;
 	cube->map = NULL;	
 }
 
 void print_tab(char**split)
 {
 	int i = 0;
+	if(!split)
+		return ;
 	while(split[i])
 	{
 		printf("%s\n",split[i]);

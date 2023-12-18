@@ -21,9 +21,14 @@ MLX42 = $(MLX_BUILD_DIR)libmlx42.a
 
 
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = #-g -Wall -Wextra -Werror
 RM = rm -f
-MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
+
+ifeq ($(shell uname), Linux)
+	MLXFL = -Iinclude -ldl -lglfw -pthread -lm
+else ifeq ($(shell uname), Darwin)
+	MLXFL = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -framework Cocoa -framework OpenGL -framework IOKit #-fsanitize=address -g
+endif
 
 LIBS = $(MLX_DIR) $(LIBFT)
 
