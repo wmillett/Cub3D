@@ -16,24 +16,14 @@ int map[MAP_WIDTH][MAP_HEIGHT] = {
 };
 
 // // Player's position and direction
-double playerX = 1.5;
-double playerY = 1.5;
-double playerDirX = 1.0;
-double playerDirY = 0.0;
 
 
 void init_raycasting(t_cube *cube)
 {
-	
-
-
-
-
-
-
-
-
-
+    cube.pos_x = 1.5;
+    cube.pos_y = 1.5;
+    cube.dir_x = 1.0;
+    cube.dir_y = 0.0;
 }
 
 
@@ -101,12 +91,18 @@ void castRay(double rayAngle)
     // ...
 }
 
-int main() {
-    // Example: Cast rays over a range of angles
-    for (int i = 0; i < 160; ++i) {
-        double rayAngle = playerDirX - 0.5 + i * 0.00625;
-        castRay(rayAngle);
-    }
+int raycast(t_cube *cube)
+{
+    double rayAngle;
+    size_t i;
 
+    init_raycasting(cube);
+    i = 0;
+    while (i < 160)
+    {
+        rayAngle = playerDirX - 0.5 + i * 0.00625;
+        castRay(rayAngle);
+        i++;
+    }
     return 0;
 }
