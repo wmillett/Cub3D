@@ -447,7 +447,7 @@ void store_file(t_cube*cube)
 	cube->tokens = ft_split(cube->content,'\n');
 	if(!cube->tokens)
 		ft_error(MALLOC_ERROR);
-	tokens_loop(cube->tokens);
+	//tokens_loop(cube->tokens);
 	map_content = cube->content + find_map_start(cube->content);
 	validate_map(map_content);
 	cube->map = get_map(cube, map_content);
