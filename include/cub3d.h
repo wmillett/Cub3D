@@ -102,6 +102,8 @@ typedef struct s_cube
 	int		f_blue;
 	t_raycast *coords;
 	bool 	found_map;
+	int 	y_size;
+	int		x_size;
 
 
 }	t_cube;
