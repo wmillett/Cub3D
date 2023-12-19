@@ -14,19 +14,23 @@ int	cub_verification(char *path)
 void read_file(t_cube*cube)
 {
 	int read_return;
+	char *buffer;
+	char *copy;
 
+	buffer = NULL;
+	copy = NULL;
 	read_return = 0;
-	cube->buffer = gc_calloc(sizeof(char),BUFFER_SIZE + 1); 
+	buffer = gc_calloc(sizeof(char),BUFFER_SIZE + 1); 
 	while(1) 
 	{
-		read_return = read(cube->fd, cube->buffer, BUFFER_SIZE);
+		read_return = read(cube->fd, buffer, BUFFER_SIZE);
 		if(read_return == ERROR)
 			ft_error(READ_ERROR);
 		if(read_return == 0)
 			break;
-		cube->copy = cube->content;
-		cube->content  = gc_strjoin(cube->copy, cube->buffer);
-		ft_bzero(cube->buffer,BUFFER_SIZE+1);
+		copy = cube->content;
+		cube->content  = gc_strjoin(copy, buffer);
+		ft_bzero(buffer,BUFFER_SIZE+1);
 	}
 }
 
@@ -414,7 +418,7 @@ void init_infos(t_cube*cube)
 	cube->f_blue = -1;
 }
 
-void store_file(t_cube*cube)
+void parsing(t_cube*cube)
 {
 	char *map_content;
 

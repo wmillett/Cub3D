@@ -2,7 +2,9 @@
 
 t_cube	*get_cube()
 {
+	static t_map map;
 	static t_cube cube;
+	cube.setup = &map;
 
 	return (&cube);
 }
@@ -27,7 +29,6 @@ int main(int argc, char **argv)
 	t_cube* cube;
 
 	cube = get_cube();
-	//cube->fd = -1;
 	if(argc < 2)
 		ft_error(NO_MAP);
 	if(cub_verification(argv[1]) == ERROR)
@@ -36,8 +37,7 @@ int main(int argc, char **argv)
 	if(cube->fd == ERROR)
 		ft_error(FD_ERROR);
 	read_file(cube);
-	store_file(get_cube());
-	
+	parsing(get_cube());
 	gc_free_all();
 	return SUCESS; 
 }

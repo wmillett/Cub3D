@@ -11,9 +11,11 @@
 
 #include "libft.h"
 # include "MLX42.h"
-// For Raycasting
+
+// 			- For Raycasting
 # include <math.h>
 # include "raycast.h"
+
 //	Errors ----------------------------------------------------
 #define ERROR -1
 #define SUCESS 0
@@ -39,13 +41,6 @@
 #define MISSING "Some informations are missing"
 #define RANDOM "Random informations"
 
-# define ERROR -1
-# define SUCESS 0
-# define NOT_CUB "The file is not a .cub"
-# define NO_MAP "Please pass one map as argument"
-# define FD_ERROR "File does not exist or an error occured when oppening it"
-# define MALLOC_ERROR "Error when allocating memory from heap"
-# define READ_ERROR "Error when reading file"
 
 //	Colors ----------------------------------------------------
 # define RED "\033[0;31m"
@@ -76,6 +71,7 @@ enum e_ori
 	E,
 	W,
 }; 
+
 //	Structs ----------------------------------------------------
 
 typedef struct s_mblock
@@ -106,12 +102,12 @@ typedef struct s_cube
 {
 	int 	fd;
 	char	*content;
-	char	*copy;
-	char	*buffer;
 	char	**tokens;
 	char	**map;
-	enum e_ori		orientation;
-	t_raycast *coordinates;	int 	start_y;
+	int 	y_size;
+	int		x_size;
+	enum 	e_ori orientation;
+	int 	start_y;
 	int		start_x;
 	char	*no_path;
 	char	*so_path;
@@ -123,13 +119,10 @@ typedef struct s_cube
 	int		f_red;
 	int		f_green;
 	int		f_blue;
+	bool 	found_map;
+	t_raycast *coordinates;	
 	t_raycast *coords;
 	t_map	*setup;
-	bool 	found_map;
-	int 	y_size;
-	int		x_size;
-
-
 }	t_cube;
 
 t_cube	*get_cube();
@@ -137,19 +130,18 @@ t_cube	*get_cube();
 //	Parsing ----------------------------------------------------
 int	cub_verification(char *path);
 void read_file(t_cube*cube);
-void store_file(t_cube*cube);
+void parsing(t_cube*cube);
 
 //	Errors and free ----------------------------------------------------
 void ft_error(char *message);
-void ft_free_all(t_cube	*cube);
-void free_table(char **table);
-void *ft_free(void*adress);
+
 // Testing ------------------------------------------------
 void print_tab(char**split);
+
 // Raycasting ------------------------------------------------
 
 
-// Garbage Collector ------------------------------------------------
+// Garbage Collector and memory functions ------------------------------------------------
 t_mblock	*garbage_collector(void);
 void	*gc_malloc(size_t size);
 void	gc_free_all(void);
@@ -160,4 +152,5 @@ char	*gc_strdup(const char *s1);
 char	*gc_strjoin(char const *s1, char const *s2);
 char	**gc_split(char const *s, char c);
 void	*gc_calloc(size_t nmemb, size_t size);
+
 #endif
