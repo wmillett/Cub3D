@@ -46,15 +46,10 @@ static void init_map(t_map *gpack)
 
 
 
-
-
-
-
-
 int	ft_window(t_cube *gpack)
 {
 	gpack->setup->mlx = mlx_init(gpack->x_size * 64, gpack->y_size * 64,
-			"SO_LONG by TDA-3D", true);
+			"CUB3D by TDA-3D", true);
 	if (!gpack->setup->mlx)
 		;
 	// init_map(gpack);
