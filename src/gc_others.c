@@ -11,8 +11,6 @@ char	*gc_strjoin(char const *s1, char const *s2)
 		return NULL;
 	size = ft_strlen(s1) + ft_strlen(s2);
 	new_str = (char *)gc_malloc(sizeof(char) * (size + 1));
-	if (!new_str)
-		return (NULL);
 	ft_strlcpy(new_str, s1, size + 1);
 	ft_strlcat(new_str, s2, size + 1);
 	return (new_str);
@@ -29,8 +27,6 @@ char	*gc_strdup(const char *s1)
 	len = ft_strlen(s1);
 	i = 0;
 	copy = (char *)gc_malloc(sizeof(char) * len + 1);
-	if (!copy)
-		return (NULL);
 	while (i < len + 1)
 	{
 		copy[i] = s1[i];
@@ -75,8 +71,6 @@ char	*gc_substr(char const *s, unsigned int start, size_t len)
 	if (len < m_size)
 		m_size = len;
 	new_str = (char *)gc_malloc(sizeof(char) * (m_size + 1));
-	if (!new_str)
-		return (NULL);
 	if (m_size == 0)
 	{
 		*new_str = 0;
@@ -92,8 +86,6 @@ void	*gc_calloc(size_t nmemb, size_t size)
 	size_t	i;
 
 	ptr = (char *)gc_malloc(nmemb * size);
-	if (!ptr)
-		return (NULL);
 	i = 0;
 	while (i < nmemb * size)
 		ptr[i++] = 0;

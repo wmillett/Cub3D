@@ -52,8 +52,6 @@ char	**gc_split(char const *s, char c)
 		return (NULL);
 	words = count_words(s, c);
 	tab = (char **)gc_malloc(sizeof(char *) * (words + 1));
-	if (!tab)
-		return (NULL);
 	tab[words] = NULL;
 	result = allocation(tab, s, c);
 	if (result == 1)
