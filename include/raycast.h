@@ -6,15 +6,15 @@
 
 //	Structs ----------------------------------------------------
 
-typedef struct s_map
-{
-	size_t	x;
-	size_t	y;
-	mlx_t	*mlx;
-	char	**map;
-}			t_map;
+// typedef struct s_map
+// {
+// 	size_t	x;
+// 	size_t	y;
+// 	mlx_t	*mlx;
+// 	char	**map;
+// }			t_map;
 
 // Prototypes for MLX ---------------------------
-int		ft_window(t_map *gpack);
+// int		ft_window(t_cube *gpack);
 
 #endif

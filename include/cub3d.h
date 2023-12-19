@@ -71,6 +71,15 @@ enum e_ori
 }; 
 //	Structs ----------------------------------------------------
 
+typedef struct s_map
+{
+	size_t	x;
+	size_t	y;
+	mlx_t	*mlx;
+	char	**map;
+}			t_map;
+
+
 typedef struct s_raycast
 {
 	double pos_x;
@@ -101,6 +110,7 @@ typedef struct s_cube
 	int		f_green;
 	int		f_blue;
 	t_raycast *coords;
+	t_map	*setup;
 	bool 	found_map;
 	int 	y_size;
 	int		x_size;
@@ -124,6 +134,8 @@ void *ft_free(void*adress);
 void print_tab(char**split);
 // Raycasting ------------------------------------------------
 
+// MLX -------------------------
+int		ft_window(t_cube *gpack);
 
 
 

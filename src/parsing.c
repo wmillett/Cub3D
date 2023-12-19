@@ -373,10 +373,6 @@ char** get_map(t_cube* cube, char *content)
 	return map;
 }
 
-
-
-
-
 void flood_fill(t_cube *cube, int y, int x)
 {
 	if(cube->map[y][x] == '-' || x == 0 || y == 0 || x == get_cube()->x_size - 1
@@ -455,8 +451,6 @@ void store_file(t_cube*cube)
 	flood_fill(cube,cube->start_y,cube->start_x);
 	print_tab(cube->map);
 }
-
-
 
 //integrate garbage collector and copy libft mallocedfunctions here
 

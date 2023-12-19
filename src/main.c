@@ -45,11 +45,9 @@ int main(int argc, char **argv)
 	store_file(get_cube());
 	
 
-	t_map *gpack = NULL;
-	gpack = malloc(sizeof(t_map*));
-	gpack->map = malloc(sizeof(char**[8][8]));
+	
 
-	ft_window(gpack);
+	// ft_window(get_cube());
 	
 	ft_free_all(get_cube());
 	return SUCESS; 

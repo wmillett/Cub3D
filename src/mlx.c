@@ -51,16 +51,16 @@ static void init_map(t_map *gpack)
 
 
 
-int	ft_window(t_map *gpack)
+int	ft_window(t_cube *gpack)
 {
-	gpack->mlx = mlx_init(gpack->x * 64, gpack->y * 64,
+	gpack->setup->mlx = mlx_init(gpack->x_size * 64, gpack->y_size * 64,
 			"SO_LONG by TDA-3D", true);
-	if (!gpack->mlx)
+	if (!gpack->setup->mlx)
 		;
 	// init_map(gpack);
 	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
-	mlx_loop(gpack->mlx);
-	mlx_terminate(gpack->mlx);
+	mlx_loop(gpack->setup->mlx);
+	mlx_terminate(gpack->setup->mlx);
 	// leave(gpack);
 	return (EXIT_SUCCESS);
 }
