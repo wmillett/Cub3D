@@ -5,6 +5,9 @@ INCLUDES = -I ./lib/libft/ -I ./lib/MLX42/include/MLX42/ -I ./ -I ./src/ -I ./in
 SRCS = 	src/main.c \
 		src/parsing.c \
 		src/errors.c \
+		src/gc.c  \
+		src/gc_split.c \
+		src/gc_others.c \
 
 #	Directories
 LIB_DIR = lib/
@@ -20,7 +23,7 @@ MLX42 = $(MLX_BUILD_DIR)libmlx42.a
 
 
 CC = gcc
-CFLAGS = #-g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 RM = rm -f
 
 ifeq ($(shell uname), Linux)

@@ -18,7 +18,7 @@ void read_file(t_cube*cube)
 	read_return = 0;
 	//cube->copy = NULL;
 	//cube->buffer = NULL;
-	cube->buffer = ft_calloc(sizeof(char),BUFFER_SIZE + 1);
+	cube->buffer = ft_calloc(sizeof(char),BUFFER_SIZE + 1); 
 	if(!cube->buffer)
 		ft_error(MALLOC_ERROR);
 	while(1) 

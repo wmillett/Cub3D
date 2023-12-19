@@ -68,6 +68,13 @@ enum e_ori
 }; 
 //	Structs ----------------------------------------------------
 
+typedef struct s_mblock
+{
+	void			*address;
+	struct s_mblock	*next_mb;
+}	t_mblock;
+
+
 typedef struct s_cube
 {
 	int 	fd;
@@ -112,6 +119,15 @@ void *ft_free(void*adress);
 void print_tab(char**split);
 
 
+// Garbage Collector ------------------------------------------------
+t_mblock	*garbage_collector(void);
+void	*gc_malloc(size_t size);
+void	gc_free_all(void);
+void	gc_free(void*address);
 
-
+char	*gc_substr(char const *s, unsigned int start, size_t len);
+char	*gc_strdup(const char *s1);
+char	*gc_strjoin(char const *s1, char const *s2);
+char	**gc_split(char const *s, char c);
+void	*gc_calloc(size_t nmemb, size_t size);
 #endif

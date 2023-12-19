@@ -6,7 +6,7 @@
 #    By: aouellet <aouellet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 20:14:03 by aouellet          #+#    #+#              #
-#    Updated: 2023/12/13 15:42:13 by aouellet         ###   ########.fr        #
+#    Updated: 2023/12/18 22:26:39 by aouellet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJ = $(SRC:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 CC = gcc
-CFLAGS = #-Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -I.
 RM = rm -f
 
 all: $(NAME)

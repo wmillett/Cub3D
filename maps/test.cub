@@ -1,20 +1,23 @@
  	F 220,100,0
-NO . / path_to_ 	 the_north_te	 xture
-SO ./path_to_the_south_texture
 
 
+
+SO ./path_to_th    	 	 	e_south_te 		 	 xture
+
+
+NO . / pa 	 th_to_ 	 the_north_te	 xture
 
 
 WE ./path_to_the_west_texture
   	EA ./pa     th_to_the_ east_tex 	 		 ture 
-	C  	5 3 , 0 , 1 	
+	C  	5 3 , 0 ,1
 
 
  	111111111111111111111
 100000 	001100001100011
 1110000011100001110011 	 	 
 	 1001000000000000000001111
-	 	 	 	 	
+	 	 	 	 		 	 	 	 	
 111111111011000011100	  11
 10000000	 00110000011111111101
 1111011111111101110000001011 	 
@@ -25,4 +28,3 @@ WE ./path_to_the_west_texture
 1110 	00011101010111110111100011111111
 		 11110111 111101 101110100011N001
     11111111110111 1111011111111111111111
-	
