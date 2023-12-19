@@ -16,11 +16,7 @@ void read_file(t_cube*cube)
 	int read_return;
 
 	read_return = 0;
-	//cube->copy = NULL;
-	//cube->buffer = NULL;
-	cube->buffer = ft_calloc(sizeof(char),BUFFER_SIZE + 1);
-	if(!cube->buffer)
-		ft_error(MALLOC_ERROR);
+	cube->buffer = gc_calloc(sizeof(char),BUFFER_SIZE + 1); 
 	while(1) 
 	{
 		read_return = read(cube->fd, cube->buffer, BUFFER_SIZE);
@@ -29,13 +25,9 @@ void read_file(t_cube*cube)
 		if(read_return == 0)
 			break;
 		cube->copy = cube->content;
-		cube->content  = ft_strjoin(cube->copy, cube->buffer);
-		if(!cube->content)
-			ft_error(MALLOC_ERROR);
-		cube->copy = ft_free(cube->copy);
+		cube->content  = gc_strjoin(cube->copy, cube->buffer);
 		ft_bzero(cube->buffer,BUFFER_SIZE+1);
 	}
-	cube->buffer = ft_free(cube->buffer);
 }
 
 int	is_whitespace(char c)
@@ -65,18 +57,13 @@ char	*remove_wspaces(char *line)
 			line[i] = SPLIT_SEP;
 		i++;
 	}
-	split = ft_split(line, SPLIT_SEP);
-	if(!split)
-		return NULL;
+	split = gc_split(line, SPLIT_SEP);
 	line = NULL;
 	i = 0;
 	while (split && split[i])
 	{
 		copy = line;
-		line = ft_strjoin(copy, split[i]);
-		if(!line)
-			return NULL;
-		free(copy);
+		line = gc_strjoin(copy, split[i]);
 		i++;
 	}
 	return (line);
@@ -151,9 +138,7 @@ void split_color_code(char *code, enum e_id id)
 
 	n = 0;
 	i = 0;
-	split = ft_split(code, ',');
-	if(!split)
-		ft_error(MALLOC_ERROR);
+	split = gc_split(code, ',');
 	while(split[i])
 	{
 		n = ft_atoi(split[i]);
@@ -355,16 +340,12 @@ char** get_map(t_cube* cube, char *content)
 	cube->y_size = 0;
 	cube->x_size = 0;
 	get_map_infos(cube, content);
-	map = malloc(sizeof(char*) * (cube->y_size + 2));
-	if(!map)
-		return NULL;
+	map = gc_malloc(sizeof(char*) * (cube->y_size + 2));
 	map[cube->y_size + 1] = NULL;
 	i = 0;
 	while(i < cube->y_size + 1)
 	{
-		map[i] = malloc(sizeof(char) * (cube->x_size + 1));
-		if(!map[i])
-			return NULL;
+		map[i] = gc_malloc(sizeof(char) * (cube->x_size + 1));
 		map[i][cube->x_size] = 0;
 		ft_memset(map[i],'-', cube->x_size);//change with space
 		i++;
@@ -439,11 +420,9 @@ void store_file(t_cube*cube)
 
 	map_content = NULL;
 	init_infos(cube);
-	read_file(cube);
-	cube->tokens = ft_split(cube->content,'\n');
-	if(!cube->tokens)
-		ft_error(MALLOC_ERROR);
-	//tokens_loop(cube->tokens);
+	
+	cube->tokens = gc_split(cube->content,'\n');
+	tokens_loop(cube->tokens);
 	map_content = cube->content + find_map_start(cube->content);
 	validate_map(map_content);
 	cube->map = get_map(cube, map_content);

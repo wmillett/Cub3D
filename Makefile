@@ -7,6 +7,9 @@ SRCS = 	src/main.c \
 		src/errors.c \
 		src/raycasting.c\
 		src/mlx.c\
+		src/gc.c  \
+		src/gc_split.c \
+		src/gc_others.c \
 
 #	Directories
 LIB_DIR = lib/
@@ -22,7 +25,7 @@ MLX42 = $(MLX_BUILD_DIR)libmlx42.a
 
 
 CC = gcc
-CFLAGS = #-g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 RM = rm -f
 
 ifeq ($(shell uname), Linux)
