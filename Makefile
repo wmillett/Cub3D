@@ -6,6 +6,7 @@ SRCS = 	src/main.c \
 		src/parsing.c \
 		src/errors.c \
 		src/raycasting.c\
+		src/mlx.c\
 
 #	Directories
 LIB_DIR = lib/

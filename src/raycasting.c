@@ -4,7 +4,8 @@
 #define MAP_HEIGHT 8
 
 // Map representing the environment (1 for wall, 0 for empty space)
-int map[MAP_WIDTH][MAP_HEIGHT] = {
+int map[MAP_WIDTH][MAP_HEIGHT] = 
+{
     {1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 1, 1, 1, 1, 0, 1},
@@ -20,10 +21,10 @@ int map[MAP_WIDTH][MAP_HEIGHT] = {
 
 void init_raycasting(t_cube *cube)
 {
-    cube.pos_x = 1.5;
-    cube.pos_y = 1.5;
-    cube.dir_x = 1.0;
-    cube.dir_y = 0.0;
+    cube->coords->pos_x = 1.5;
+    cube->coords->pos_y = 1.5;
+    cube->coords->dir_x = 1.0;
+    cube->coords->dir_y = 0.0;
 }
 
 
@@ -32,16 +33,25 @@ void init_raycasting(t_cube *cube)
 
 
 
+
+
+
+
+
+
+
+
+
 // Raycasting function
-void castRay(double rayAngle) 
+void castRay(double rayAngle, t_cube *cube)
 {
     // Ray parameters
-    double rayX = playerX;
-    double rayY = playerY;
-    double rayDirX = playerDirX + sin(rayAngle);
-    double rayDirY = playerDirY + cos(rayAngle);
+    const double rayX = cube->coords->pos_x;
+    const double rayY = cube->coords->pos_y;
+    const double rayDirX = cube->coords->dir_x + sin(rayAngle);
+    const double rayDirY = cube->coords->dir_y + cos(rayAngle);
 
-    // Map coordinates
+    // Map coordinatescube->coords-> 
     int mapX = (int)rayX;
     int mapY = (int)rayY;
 
@@ -100,8 +110,8 @@ int raycast(t_cube *cube)
     i = 0;
     while (i < 160)
     {
-        rayAngle = playerDirX - 0.5 + i * 0.00625;
-        castRay(rayAngle);
+        rayAngle = cube->coords->dir_x - 0.5 + i * 0.00625;
+        castRay(rayAngle, cube);
         i++;
     }
     return 0;

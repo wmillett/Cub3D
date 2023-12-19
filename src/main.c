@@ -41,10 +41,16 @@ int main(int argc, char **argv)
 	get_cube()->fd = open(argv[1], O_RDONLY);
 	if(get_cube()->fd == ERROR)
 		ft_error(FD_ERROR);
-
+	
 	store_file(get_cube());
 	
 
+	t_map *gpack = NULL;
+	gpack = malloc(sizeof(t_map*));
+	gpack->map = malloc(sizeof(char**[8][8]));
+
+	ft_window(gpack);
+	
 	ft_free_all(get_cube());
 	return SUCESS; 
 }

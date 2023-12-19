@@ -7,12 +7,13 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+# include <limits.h>
 
 #include "libft.h"
 # include "MLX42.h"
 // For Raycasting
 # include <math.h>
-
+# include "raycast.h"
 //	Errors ----------------------------------------------------
 #define ERROR -1
 #define SUCESS 0
@@ -99,6 +100,7 @@ typedef struct s_cube
 	int		f_red;
 	int		f_green;
 	int		f_blue;
+	t_raycast *coords;
 	bool 	found_map;
 
 
