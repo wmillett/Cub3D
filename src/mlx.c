@@ -33,10 +33,10 @@ int	mlx_start(t_cube *cube)
 	cube->cubmlx->mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "CUB3D by TDA-3D", true);
 	if(!cube->cubmlx->mlx)
 		return 1; 
-	cube->cubmlx->image = mlx_new_image(cube->cubmlx->mlx,SCREENWIDTH,SCREENHEIGHT);
-	if(!cube->cubmlx->image)
+	cube->cubmlx->img_buf = mlx_new_image(cube->cubmlx->mlx,SCREENWIDTH,SCREENHEIGHT);
+	if(!cube->cubmlx->img_buf)
 		return 1;
-	if(mlx_image_to_window(cube->cubmlx->mlx,cube->cubmlx->image,SCREENWIDTH,SCREENHEIGHT) == ERROR)
+	if(mlx_image_to_window(cube->cubmlx->mlx,cube->cubmlx->img_buf,SCREENWIDTH,SCREENHEIGHT) == ERROR)
 		return 1;
 	cube->cubmlx->south_text = mlx_load_png(cube->so_path);
 	if(!cube->cubmlx->south_text)
@@ -52,9 +52,10 @@ int	mlx_start(t_cube *cube)
 		return 1;
 	
 	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
+	//mlx_loop_hook   pass raycasting loop function here
 	mlx_loop(cube->cubmlx->mlx);
 	mlx_terminate(cube->cubmlx->mlx);
-
+	//free mlx stuff and add in error function
 	return (EXIT_SUCCESS);
 }
 

@@ -94,7 +94,7 @@ typedef struct s_cubmlx
 	mlx_texture_t*	south_text;
 	mlx_texture_t*	east_text;
 	mlx_texture_t*	west_text;
-	mlx_image_t*	image;
+	mlx_image_t*	img_buf;
 
 	
 }			t_cubmlx;
