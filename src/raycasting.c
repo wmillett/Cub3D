@@ -1,4 +1,4 @@
-// #include "cub3d.h"
+#include "cub3d.h"
 
 // #define MAP_WIDTH 8
 // #define MAP_HEIGHT 8
@@ -15,20 +15,6 @@
 //     cube->coords->dir_x = 1.0;
 //     cube->coords->dir_y = 0.0;
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // // Raycasting function
@@ -105,3 +91,4 @@
 //     }
 //     return 0;
 // }
+

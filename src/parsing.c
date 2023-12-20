@@ -11,6 +11,17 @@ int	cub_verification(char *path)
 	return (ERROR);
 } 
 
+int	png_verification(char *path)
+{
+	int	len;
+         
+	len = ft_strlen(path);
+	if (len > 4 && path[len - 5] != '/' && ft_tolower(path[len - 1]) == 'g' && 
+		ft_tolower(path[len- 2]) == 'n' && ft_tolower(path[len - 3]) == 'p' && path[len - 4] == '.')
+		return (SUCESS);
+	return (ERROR);
+} 
+
 void read_file(t_cube*cube)
 {
 	int read_return;
@@ -105,6 +116,8 @@ void add_path( char *path, enum e_id id)
 	t_cube *cube;
 	
 	cube = get_cube();
+	if(png_verification(path) == ERROR)
+		ft_error(NOT_PNG);
 	if(access(path, R_OK) != 0)
 		ft_error(NO_TEXT);
 	add_path_body(cube, path, id);

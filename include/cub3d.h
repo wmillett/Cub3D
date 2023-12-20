@@ -17,13 +17,16 @@
 # include "raycast.h"
 
 # define SCREENWIDTH 1024
-#define SCREENHEIGHT  768
+# define SCREENHEIGHT  768
+# define TEXWIDTH 64
+# define TEXTHEIGHT 64
 
 //	Errors ----------------------------------------------------
 #define ERROR -1
 #define SUCESS 0
 
 #define NOT_CUB "The file is not a .cub"
+#define NOT_PNG "THe texture is not a .png"
 #define NO_MAP "Please pass one map as argument"
 
 #define FD_ERROR "File does not exist or an error occured when oppening it"
@@ -91,6 +94,7 @@ typedef struct s_cubmlx
 	mlx_texture_t*	south_text;
 	mlx_texture_t*	east_text;
 	mlx_texture_t*	west_text;
+	mlx_image_t*	image;
 
 	
 }			t_cubmlx;
@@ -137,6 +141,7 @@ t_cube	*get_cube();
 
 //	Parsing ----------------------------------------------------
 int	cub_verification(char *path);
+int	png_verification(char *path);
 void read_file(t_cube*cube);
 void parsing(t_cube*cube);
 
@@ -150,7 +155,7 @@ void print_tab(char**split);
 
 
 // Mlx -------------------------------------------
-int	ft_window(t_cube *cube);
+int	mlx_start(t_cube *cube);
 
 // Garbage Collector and memory functions ------------------------------------------------
 t_mblock	*garbage_collector(void);

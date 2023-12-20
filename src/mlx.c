@@ -27,14 +27,30 @@
 
 
 
-int	ft_window(t_cube *cube)
+int	mlx_start(t_cube *cube)
 {
-	//printf("w %d h %d\n",cube->width, cube->height);
-	cube->cubmlx->mlx = mlx_init(SCREENWIDTH * 64, SCREENHEIGHT * 64, 
-		"CUB3D by TDA-3D", true);
-	if(!cube->cubmlx)
-		return 1; //error here
-
+	//printf("%s %s %s %s\n",cube->no_path,cube->so_path,cube->ea_path,cube->we_path);
+	cube->cubmlx->mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "CUB3D by TDA-3D", true);
+	if(!cube->cubmlx->mlx)
+		return 1; 
+	cube->cubmlx->image = mlx_new_image(cube->cubmlx->mlx,SCREENWIDTH,SCREENHEIGHT);
+	if(!cube->cubmlx->image)
+		return 1;
+	if(mlx_image_to_window(cube->cubmlx->mlx,cube->cubmlx->image,SCREENWIDTH,SCREENHEIGHT) == ERROR)
+		return 1;
+	cube->cubmlx->south_text = mlx_load_png(cube->so_path);
+	if(!cube->cubmlx->south_text)
+		return 1;
+	cube->cubmlx->north_text = mlx_load_png(cube->no_path);
+	if(!cube->cubmlx->north_text)
+		return 1;
+	cube->cubmlx->east_text = mlx_load_png(cube->ea_path);
+	if(!cube->cubmlx->east_text)
+		return 1;
+	cube->cubmlx->west_text = mlx_load_png(cube->we_path);
+	if(!cube->cubmlx->west_text)
+		return 1;
+	
 	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
 	mlx_loop(cube->cubmlx->mlx);
 	mlx_terminate(cube->cubmlx->mlx);

@@ -16,4 +16,7 @@
 !maps/
 !*.cub
 
+!textures/
+!*.png
+
 !.gitignore

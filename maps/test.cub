@@ -2,14 +2,14 @@
 
 
 
-SO ./path_to_th    	 	 	e_south_te 		 	 xture
+SO ./textures/ brick.png
 
 
-NO . / pa 	 th_to_ 	 the_north_te	 xture 
+NO . / textures/pa 	 th_to_ 	 the_north_te	 xture  . p n 	g
 
 
-WE ./path_to_the_west_texture
-  	EA ./pa     th_to_the_ east_tex 	 		 ture 
+WE . /    t extures  / path_to_the_west_texture.png 	  
+  	EA ./textures/pa     th_to_the_ east_tex 	 		 ture . 		p n g
 	C  	5 3 , 0 , 	 1	 7
 
 
@@ -29,3 +29,4 @@ WE ./path_to_the_west_texture
 1110 	0001110101011111011110001111111111
 		 11110111 111101 1011101000110011N1 
     11111111110111 11110111111111111111111
+	

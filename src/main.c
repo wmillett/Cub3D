@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 		ft_error(FD_ERROR);
 	read_file(cube);
 	parsing(get_cube());
-	ft_window(cube);
+	mlx_start(cube);
 	gc_free_all();
 	return SUCESS; 
 }
