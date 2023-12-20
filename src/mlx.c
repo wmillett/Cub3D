@@ -1,4 +1,4 @@
-// #include "cub3d.h"
+#include "cub3d.h"
 
 // static void	ft_mchook(mlx_key_data_t k, void *param)
 // {
@@ -25,40 +25,22 @@
 
 
 
-// static void init_map(t_map *gpack)
-// {
-// 	//Mem allocated
-// 	int what[8][8]	= 
-// 	{
-//     {'1', '1', '1', '1', '1', '1', '1', '1'},
-//     {'1', '0', '0', '0', '0', '0', '0', '1'},
-//     {'1', '0', '1', '1', '1', '1', '0', '1'},
-//     {'1', '0', '1', '0', '0', '1', '0', '1'},
-//     {'1', '0', '1', '0', '0', '1', '0', '1'},
-//     {'1', '0', '0', '0', '0', '0', '0', '1'},
-//     {'1', '1', '1', '1', '1', '1', '1', '1'},
-//     {'1', '1', '1', '1', '1', '1', '1', '1'}
-// 	};
-// 	// gpack->map = what;
-// }
 
 
+int	ft_window(t_cube *cube)
+{
+	//printf("w %d h %d\n",cube->width, cube->height);
+	cube->cubmlx->mlx = mlx_init(SCREENWIDTH * 64, SCREENHEIGHT * 64, 
+		"CUB3D by TDA-3D", true);
+	if(!cube->cubmlx)
+		return 1; //error here
 
+	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
+	mlx_loop(cube->cubmlx->mlx);
+	mlx_terminate(cube->cubmlx->mlx);
 
-
-// int	ft_window(t_cube *gpack)
-// {
-// 	gpack->setup->mlx = mlx_init(gpack->x_size * 64, gpack->y_size * 64,
-// 			"CUB3D by TDA-3D", true);
-// 	if (!gpack->setup->mlx)
-// 		;
-// 	// init_map(gpack);
-// 	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
-// 	mlx_loop(gpack->setup->mlx);
-// 	mlx_terminate(gpack->setup->mlx);
-// 	// leave(gpack);
-// 	return (EXIT_SUCCESS);
-// }
+	return (EXIT_SUCCESS);
+}
 
 
 
