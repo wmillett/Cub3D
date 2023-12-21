@@ -16,8 +16,8 @@
 # include <math.h>
 # include "raycast.h"
 
-# define SCREENWIDTH 1024
-# define SCREENHEIGHT  768
+# define SCREENWIDTH 1920
+# define SCREENHEIGHT  1080
 # define TEXWIDTH 64
 # define TEXTHEIGHT 64
 
@@ -70,7 +70,7 @@ enum e_id
 	F,
 };  
 
-enum e_ori
+enum e_dir
 {
 	N,
 	S,
@@ -95,6 +95,9 @@ typedef struct s_cubmlx
 	mlx_texture_t*	east_text;
 	mlx_texture_t*	west_text;
 	mlx_image_t*	img_buf;
+	mlx_image_t*	bg_buf;
+	uint32_t		ceiling_color;
+	uint32_t		floor_color;
 
 	
 }			t_cubmlx;
@@ -118,7 +121,7 @@ typedef struct s_cube
 	int		x_size;
 	int		width;
 	int		height;
-	enum 	e_ori orientation;
+	enum 	e_dir orientation;
 	int 	start_y;
 	int		start_x;
 	char	*no_path;
@@ -152,7 +155,7 @@ void ft_error(char *message);
 void print_tab(char**split);
 
 // Raycasting ------------------------------------------------
-
+void raycasting_loop(void *arg);
 
 // Mlx -------------------------------------------
 int	mlx_start(t_cube *cube);
