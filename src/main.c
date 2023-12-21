@@ -4,7 +4,9 @@ t_cube	*get_cube()
 {
 	static t_cubmlx cubmlx;
 	static t_cube cube;
+	static t_raycast raycast;
 	cube.cubmlx = &cubmlx;
+	cube.raycast = &raycast;
 
 	return (&cube);
 }

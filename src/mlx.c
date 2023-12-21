@@ -79,10 +79,10 @@ int	mlx_start(t_cube *cube)
 	// cube->cubmlx->west_text = mlx_load_png(cube->we_path);
 	// if(!cube->cubmlx->west_text)
 	// 	return 1;
-	
+	set_raycast_vars(cube->raycast);
 
-	//mlx_key_hook(gpack->mlx, &ft_mchook, gpack);
-	mlx_loop_hook(cube->cubmlx->mlx,&raycasting_loop,NULL);
+	mlx_key_hook(cube->cubmlx->mlx, &key_hook, NULL);
+	mlx_loop_hook(cube->cubmlx->mlx,&raycasting_loop,cube);
 	mlx_loop(cube->cubmlx->mlx);
 	mlx_terminate(cube->cubmlx->mlx);
 	//free mlx stuff and add in error function

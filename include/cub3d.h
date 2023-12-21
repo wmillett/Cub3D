@@ -109,6 +109,26 @@ typedef struct s_raycast
 	double pos_y;
 	double dir_x;
 	double dir_y;
+	double plane_x;
+	double plane_y;
+	double ray_dir_x;
+	double ray_dir_y;
+	double camera_x;
+	int map_x;
+	int map_y;
+	double delta_dist_x;
+	double delta_dist_y;
+	double step_x;
+	double step_y;
+	double side_dist_x;
+	double side_dist_y;
+	int hit;
+	int side;
+	double perp_wall_dist;
+	int line_height;
+	int draw_start;
+	int draw_end;
+	double move_speed;
 }	t_raycast;
 
 typedef struct s_cube
@@ -135,8 +155,7 @@ typedef struct s_cube
 	int		f_green;
 	int		f_blue;
 	bool 	found_map;
-	t_raycast *coordinates;	
-	t_raycast *coords;
+	t_raycast *raycast;
 	t_cubmlx	*cubmlx;
 }	t_cube;
 
@@ -156,7 +175,8 @@ void print_tab(char**split);
 
 // Raycasting ------------------------------------------------
 void raycasting_loop(void *arg);
-
+void set_raycast_vars(t_raycast*rc);
+void	key_hook(mlx_key_data_t keydata, void *param);
 // Mlx -------------------------------------------
 int	mlx_start(t_cube *cube);
 
