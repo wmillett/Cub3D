@@ -2,86 +2,80 @@
 
 
 
- void	key_hook(mlx_key_data_t keydata, void *param)
+ void	key_hook(void)
  {
- 	(void)param;
-
+ 	
+	t_cube*cube = get_cube();
+	t_raycast *rc = cube->raycast;
  	//t_cube *cube = get_cube();
  	// if (keydata.key == MLX_KEY_ESCAPE)
  	 //	mlx_close_window(map->m_pack->mlx);
 
- 	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_W))
  	{
- 		printf("w\n");	//some code
-
+ 		/*
+ 		if(cube->map[(int)rc->pos_y][(int)(rc->pos_x + rc->dir_x * MOVE_SPEED)] == false) 
+	  		rc->pos_x += rc->dir_x * MOVE_SPEED;
+        if(cube->map[(int)(rc->pos_y + rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
+	  		rc->pos_y += rc->dir_y * MOVE_SPEED;
+		printf("W\n");
+	*/
  	}
- 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+ 	if  (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_S)) 
+ 		/*
+		{
+ 			 if(cube->map[(int)(rc->pos_y)][(int)(rc->pos_x - rc->dir_x * MOVE_SPEED)] == false) 
+	  			rc->pos_x -= rc->dir_x * MOVE_SPEED;
+     		 if(cube->map[(int)(rc->pos_y - rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
+	  			rc->pos_y -= rc->dir_y * MOVE_SPEED;
+			printf("S\n");
+ 		}*/
+	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_A))
+		printf("s");
+		//fdsf
+	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_D))
+		printf("s");
+		//sdfs
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_RIGHT))
  		{
-			printf("d\n");
- 			//some code
+			double	x;
 
+			x = rc->dir_x;
+			rc->dir_x = x * cos(ROTATE_SPEED ) - rc->dir_y * sin(ROTATE_SPEED);
+			rc->dir_y = x * sin(ROTATE_SPEED) + rc->dir_y * cos(ROTATE_SPEED);
+
+			x = rc->plane_x;
+			rc->plane_x = x * cos(ROTATE_SPEED) - rc->plane_y * sin(ROTATE_SPEED);
+			rc->plane_y = x * sin(ROTATE_SPEED) + rc->plane_y * cos(ROTATE_SPEED);
  		}
- 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS
- 			|| keydata.action == MLX_REPEAT))
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_LEFT))
  		{
- 			printf("s\n");//some code
+			double	x;
 
- 		}
- 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS
- 			|| keydata.action == MLX_REPEAT))
- 		{
-			printf("a\n");
- 			//some code
+			x = rc->dir_x;
+			rc->dir_x = x * cos(-ROTATE_SPEED) - rc->dir_y * sin(-ROTATE_SPEED);
+			rc->dir_y = x * sin(-ROTATE_SPEED) + rc->dir_y * cos(-ROTATE_SPEED);
 
+			x = rc->plane_x;
+			rc->plane_x = x * cos(-ROTATE_SPEED) - rc->plane_y * sin(-ROTATE_SPEED);
+			rc->plane_y = x * sin(-ROTATE_SPEED) + rc->plane_y * cos(-ROTATE_SPEED);
  		}
  }
-	/*
-    if (keyDown(SDLK_UP))
-    {
-      if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-    }
-    //move backwards if no wall behind you
-    if (keyDown(SDLK_DOWN))
-    {
-      if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-    }
-    //rotate to the right
-    if (keyDown(SDLK_RIGHT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-      dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-    }
-    //rotate to the left
-    if (keyDown(SDLK_LEFT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-      dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-      planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-    }
-  }
-}
-*/
+	
+
 
 
 void set_raycast_vars(t_raycast*rc)
 {
-	rc->pos_x = get_cube()->start_x;
-	rc->pos_y = get_cube()->start_y;
+	rc->pos_x = (double)get_cube()->start_x + 0.5;
+	rc->pos_y = (double)get_cube()->start_y + 0.5;
+
+	//change based on letter
 	rc->dir_x = 1;
 	rc->dir_y = 0;
 	rc->plane_x = 0;
-	rc->plane_y = 0.66;
+	rc->plane_y = 0.66; 
+
 
 
 }
@@ -182,11 +176,14 @@ void raycasting_loop(void *arg)
 		//------------------------------------------------------------------
 
 		y = rc->draw_start;
+		//printf("%d %d\n",rc->draw_end,rc->draw_start);
 		while(y < rc->draw_end) //change with texture code
 		{
 			mlx_put_pixel(cube->cubmlx->img_buf,x,y,0x0000ffff); 
 			y++;
 		}
+		key_hook();
+		//printf("dir x %f dir y %f plane x %f plane y %f\n",rc->dir_x,rc->dir_y,rc->plane_x,rc->plane_y);
 		x++;
 	}
 	usleep(1000);

@@ -81,7 +81,7 @@ int	mlx_start(t_cube *cube)
 	// 	return 1;
 	set_raycast_vars(cube->raycast);
 
-	mlx_key_hook(cube->cubmlx->mlx, &key_hook, NULL);
+	//mlx_key_hook(cube->cubmlx->mlx, &key_hook, NULL);
 	mlx_loop_hook(cube->cubmlx->mlx,&raycasting_loop,cube);
 	mlx_loop(cube->cubmlx->mlx);
 	mlx_terminate(cube->cubmlx->mlx);
