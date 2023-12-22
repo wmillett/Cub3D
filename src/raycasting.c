@@ -1,5 +1,9 @@
 #include "cub3d.h"
 
+#define COLOR_NORTH 0x0000FFFF  
+#define COLOR_SOUTH 0x00FF00FF  
+#define COLOR_EAST  0xFF00FFFF  
+#define COLOR_WEST  0x00FFFFFF  
 
 
  void	key_hook(void)
@@ -128,35 +132,39 @@ void raycasting_loop(void *arg)
  	rc->hit = 0; 
 	rc->side = 0;
 
+	while (1)
+	{
+		if(cube->map[rc->map_y][rc->map_x] == '1') 
+			break ;
+		else
+			{
 
-      while (rc->hit == 0)
-      {
-        //jump to next map square, either in x-direction, or in y-direction
-        if (rc->side_dist_x < rc->side_dist_y)
-        {
-          rc->side_dist_x += rc->delta_dist_x;
-          rc->map_x += rc->step_x;
-          rc->side = 0;
-        }
-        else
-        {
-          rc->side_dist_y += rc->delta_dist_y;
-          rc->map_y += rc->step_y;
-          rc->side = 1;
-        }
-        //Check if ray has hit a wall
-		
-        if (cube->map[rc->map_y][rc->map_x] == '1') 
-			rc->hit = 1;
-      } 
+					if (rc->side_dist_x < rc->side_dist_y)
+					{
+						rc->side_dist_x += rc->delta_dist_x;
+						rc->map_x += rc->step_x;
+						if (rc->ray_dir_x > 0)
+							rc->side = 0;
+						else
+							rc->side = 1;
+					}
+					else
+					{
+						rc->side_dist_y += rc->delta_dist_y;
+						rc->map_y += rc->step_y;
+						if (rc->ray_dir_y > 0)
+							rc->side = 2;
+						else
+							rc->side = 3;
+					}
+			}
+	}
+	if (rc->side< 2)
+		rc->perp_wall_dist = (rc->side_dist_x - rc->delta_dist_x);
+	else
+		rc->perp_wall_dist = (rc->side_dist_y - rc->delta_dist_y);
 
-		//Calculate distance projected on camera direction
-	
 
-		if(rc->side == 0) 
-			rc->perp_wall_dist = (rc->side_dist_x - rc->delta_dist_x);
-		else          
-			rc->perp_wall_dist = (rc->side_dist_y - rc->delta_dist_y);
 
         // Calculate height of line to draw on screen (you need to implement your own height calculation logic)
         rc->line_height = (int)(SCREENHEIGHT / rc->perp_wall_dist);
@@ -176,12 +184,28 @@ void raycasting_loop(void *arg)
 		//------------------------------------------------------------------
 
 		y = rc->draw_start;
-		//printf("%d %d\n",rc->draw_end,rc->draw_start);
-		while(y < rc->draw_end) //change with texture code
+
+		while (y < rc->draw_end) 
 		{
-			mlx_put_pixel(cube->cubmlx->img_buf,x,y,0x0000ffff); 
+			unsigned int pixel_color;
+
+			if(rc->side == 0)
+				pixel_color = COLOR_NORTH;
+
+			else if(rc->side == 1)
+					pixel_color = COLOR_SOUTH;
+
+			else if(rc->side == 2)
+					pixel_color = COLOR_EAST;
+
+			else if(rc->side == 3)
+					pixel_color = COLOR_WEST;
+
+			mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
+
 			y++;
 		}
+
 		key_hook();
 		//printf("dir x %f dir y %f plane x %f plane y %f\n",rc->dir_x,rc->dir_y,rc->plane_x,rc->plane_y);
 		x++;
