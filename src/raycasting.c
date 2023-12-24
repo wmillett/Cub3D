@@ -200,7 +200,8 @@ void raycasting_loop(void *arg)
 
 			else if(rc->side == 3)
 					pixel_color = COLOR_WEST;
-
+			else
+				pixel_color = 0;
 			mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
 
 			y++;
