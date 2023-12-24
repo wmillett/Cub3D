@@ -1,69 +1,85 @@
 #include "cub3d.h"
 
+#define COLOR_NORTH 0x0000FFFF  
+#define COLOR_SOUTH 0x00FF00FF  
+#define COLOR_EAST  0xFF00FFFF  
+#define COLOR_WEST  0x00FFFFFF  
 
 
- void	key_hook(mlx_key_data_t keydata, void *param)
+ void	key_hook(void)
  {
- 	(void)param;
+ 	
+	t_cube*cube = get_cube();
+	t_raycast *rc = cube->raycast;
+ 	//t_cube *cube = get_cube();
+ 	// if (keydata.key == MLX_KEY_ESCAPE)
+ 	 //	mlx_close_window(map->m_pack->mlx);
 
- 	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
- 		printf("w\n");	//some code
- 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		printf("d\n");
- 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS
- 			|| keydata.action == MLX_REPEAT))
- 		printf("s\n");//some code
- 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS
- 			|| keydata.action == MLX_REPEAT))
-		printf("a\n");
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_W))
+ 	{
+ 		/*
+ 		if(cube->map[(int)rc->pos_y][(int)(rc->pos_x + rc->dir_x * MOVE_SPEED)] == false) 
+	  		rc->pos_x += rc->dir_x * MOVE_SPEED;
+        if(cube->map[(int)(rc->pos_y + rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
+	  		rc->pos_y += rc->dir_y * MOVE_SPEED;
+		printf("W\n");
+	*/
+ 	}
+ 	if  (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_S)) 
+ 		/*
+		{
+ 			 if(cube->map[(int)(rc->pos_y)][(int)(rc->pos_x - rc->dir_x * MOVE_SPEED)] == false) 
+	  			rc->pos_x -= rc->dir_x * MOVE_SPEED;
+     		 if(cube->map[(int)(rc->pos_y - rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
+	  			rc->pos_y -= rc->dir_y * MOVE_SPEED;
+			printf("S\n");
+ 		}*/
+	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_A))
+		printf("s");
+		//fdsf
+	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_D))
+		printf("s");
+		//sdfs
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_RIGHT))
+ 		{
+			double	x;
+
+			x = rc->dir_x;
+			rc->dir_x = x * cos(ROTATE_SPEED ) - rc->dir_y * sin(ROTATE_SPEED);
+			rc->dir_y = x * sin(ROTATE_SPEED) + rc->dir_y * cos(ROTATE_SPEED);
+
+			x = rc->plane_x;
+			rc->plane_x = x * cos(ROTATE_SPEED) - rc->plane_y * sin(ROTATE_SPEED);
+			rc->plane_y = x * sin(ROTATE_SPEED) + rc->plane_y * cos(ROTATE_SPEED);
+ 		}
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_LEFT))
+ 		{
+			double	x;
+
+			x = rc->dir_x;
+			rc->dir_x = x * cos(-ROTATE_SPEED) - rc->dir_y * sin(-ROTATE_SPEED);
+			rc->dir_y = x * sin(-ROTATE_SPEED) + rc->dir_y * cos(-ROTATE_SPEED);
+
+			x = rc->plane_x;
+			rc->plane_x = x * cos(-ROTATE_SPEED) - rc->plane_y * sin(-ROTATE_SPEED);
+			rc->plane_y = x * sin(-ROTATE_SPEED) + rc->plane_y * cos(-ROTATE_SPEED);
+ 		}
  }
-	/*
-    if (keyDown(SDLK_UP))
-    {
-      if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-    }
-    //move backwards if no wall behind you
-    if (keyDown(SDLK_DOWN))
-    {
-      if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-    }
-    //rotate to the right
-    if (keyDown(SDLK_RIGHT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-      dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-    }
-    //rotate to the left
-    if (keyDown(SDLK_LEFT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-      dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-      planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-    }
-  }
-}
-*/
+	
+
 
 
 void set_raycast_vars(t_raycast*rc)
 {
-	rc->pos_x = get_cube()->start_x;
-	rc->pos_y = get_cube()->start_y;
+	rc->pos_x = (double)get_cube()->start_x + 0.5;
+	rc->pos_y = (double)get_cube()->start_y + 0.5;
+
+	//change based on letter
 	rc->dir_x = 1;
 	rc->dir_y = 0;
 	rc->plane_x = 0;
-	rc->plane_y = 0.66;
+	rc->plane_y = 0.66; 
+
 
 
 }
@@ -116,35 +132,39 @@ void raycasting_loop(void *arg)
  	rc->hit = 0; 
 	rc->side = 0;
 
+	while (1)
+	{
+		if(cube->map[rc->map_y][rc->map_x] == '1') 
+			break ;
+		else
+			{
 
-      while (rc->hit == 0)
-      {
-        //jump to next map square, either in x-direction, or in y-direction
-        if (rc->side_dist_x < rc->side_dist_y)
-        {
-          rc->side_dist_x += rc->delta_dist_x;
-          rc->map_x += rc->step_x;
-          rc->side = 0;
-        }
-        else
-        {
-          rc->side_dist_y += rc->delta_dist_y;
-          rc->map_y += rc->step_y;
-          rc->side = 1;
-        }
-        //Check if ray has hit a wall
-		
-        if (cube->map[rc->map_y][rc->map_x] == '1') 
-			rc->hit = 1;
-      } 
+					if (rc->side_dist_x < rc->side_dist_y)
+					{
+						rc->side_dist_x += rc->delta_dist_x;
+						rc->map_x += rc->step_x;
+						if (rc->ray_dir_x > 0)
+							rc->side = 0;
+						else
+							rc->side = 1;
+					}
+					else
+					{
+						rc->side_dist_y += rc->delta_dist_y;
+						rc->map_y += rc->step_y;
+						if (rc->ray_dir_y > 0)
+							rc->side = 2;
+						else
+							rc->side = 3;
+					}
+			}
+	}
+	if (rc->side< 2)
+		rc->perp_wall_dist = (rc->side_dist_x - rc->delta_dist_x);
+	else
+		rc->perp_wall_dist = (rc->side_dist_y - rc->delta_dist_y);
 
-		//Calculate distance projected on camera direction
-	
 
-		if(rc->side == 0) 
-			rc->perp_wall_dist = (rc->side_dist_x - rc->delta_dist_x);
-		else          
-			rc->perp_wall_dist = (rc->side_dist_y - rc->delta_dist_y);
 
         // Calculate height of line to draw on screen (you need to implement your own height calculation logic)
         rc->line_height = (int)(SCREENHEIGHT / rc->perp_wall_dist);
@@ -164,11 +184,30 @@ void raycasting_loop(void *arg)
 		//------------------------------------------------------------------
 
 		y = rc->draw_start;
-		while(y < rc->draw_end) //change with texture code
+
+		while (y < rc->draw_end) 
 		{
-			mlx_put_pixel(cube->cubmlx->img_buf,x,y,0x0000ffff); 
+			unsigned int pixel_color;
+
+			if(rc->side == 0)
+				pixel_color = COLOR_NORTH;
+
+			else if(rc->side == 1)
+					pixel_color = COLOR_SOUTH;
+
+			else if(rc->side == 2)
+					pixel_color = COLOR_EAST;
+
+			else if(rc->side == 3)
+					pixel_color = COLOR_WEST;
+
+			mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
+
 			y++;
 		}
+
+		key_hook();
+		//printf("dir x %f dir y %f plane x %f plane y %f\n",rc->dir_x,rc->dir_y,rc->plane_x,rc->plane_y);
 		x++;
 	}
 	usleep(1000);

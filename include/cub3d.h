@@ -21,6 +21,9 @@
 # define TEXWIDTH 64
 # define TEXTHEIGHT 64
 
+# define MOVE_SPEED 0.00007
+# define ROTATE_SPEED 0.000040
+
 //	Errors ----------------------------------------------------
 #define ERROR -1
 #define SUCESS 0
@@ -128,7 +131,8 @@ typedef struct s_raycast
 	int line_height;
 	int draw_start;
 	int draw_end;
-	double move_speed;
+	//double move_speed;
+	//double rot_speed;
 }	t_raycast;
 
 typedef struct s_cube
@@ -176,7 +180,7 @@ void print_tab(char**split);
 // Raycasting ------------------------------------------------
 void raycasting_loop(void *arg);
 void set_raycast_vars(t_raycast*rc);
-void	key_hook(mlx_key_data_t keydata, void *param);
+void	key_hook(void);
 // Mlx -------------------------------------------
 int	mlx_start(t_cube *cube);
 

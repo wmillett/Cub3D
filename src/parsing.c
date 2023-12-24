@@ -116,9 +116,10 @@ void add_path( char *path, enum e_id id)
 	t_cube *cube;
 	
 	cube = get_cube();
+	
 	if(png_verification(path) == ERROR)
 		ft_error(NOT_PNG);
-	if(access(path, R_OK) != 0)
+	if(open(path, O_RDONLY) == ERROR)
 		ft_error(NO_TEXT);
 	add_path_body(cube, path, id);
 }
