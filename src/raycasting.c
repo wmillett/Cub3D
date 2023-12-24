@@ -6,34 +6,16 @@
  {
  	(void)param;
 
- 	//t_cube *cube = get_cube();
- 	// if (keydata.key == MLX_KEY_ESCAPE)
- 	 //	mlx_close_window(map->m_pack->mlx);
-
  	if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
- 	{
  		printf("w\n");	//some code
-
- 	}
  	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
- 		{
-			printf("d\n");
- 			//some code
-
- 		}
+		printf("d\n");
  	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS
  			|| keydata.action == MLX_REPEAT))
- 		{
- 			printf("s\n");//some code
-
- 		}
+ 		printf("s\n");//some code
  	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS
  			|| keydata.action == MLX_REPEAT))
- 		{
-			printf("a\n");
- 			//some code
-
- 		}
+		printf("a\n");
  }
 	/*
     if (keyDown(SDLK_UP))
