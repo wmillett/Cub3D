@@ -17,29 +17,29 @@
 
  	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_W))
  	{
- 		/*
- 		if(cube->map[(int)rc->pos_y][(int)(rc->pos_x + rc->dir_x * MOVE_SPEED)] == false) 
-	  		rc->pos_x += rc->dir_x * MOVE_SPEED;
-        if(cube->map[(int)(rc->pos_y + rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
-	  		rc->pos_y += rc->dir_y * MOVE_SPEED;
-		printf("W\n");
-	*/
+	  	rc->pos_x += rc->dir_x * MOVE_SPEED;
+	  	rc->pos_y += rc->dir_y * MOVE_SPEED;
  	}
  	if  (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_S)) 
- 		/*
-		{
- 			 if(cube->map[(int)(rc->pos_y)][(int)(rc->pos_x - rc->dir_x * MOVE_SPEED)] == false) 
-	  			rc->pos_x -= rc->dir_x * MOVE_SPEED;
-     		 if(cube->map[(int)(rc->pos_y - rc->dir_y * MOVE_SPEED)][(int)(rc->pos_x)] == false) 
-	  			rc->pos_y -= rc->dir_y * MOVE_SPEED;
-			printf("S\n");
- 		}*/
+	{
+		rc->pos_x -= rc->dir_x * MOVE_SPEED;
+		rc->pos_y -= rc->dir_y * MOVE_SPEED;
+		
+ 	}
 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_A))
-		printf("s");
-		//fdsf
+	{
+	
+		rc->pos_x -= rc->plane_x * MOVE_SPEED;
+		rc->pos_y -= rc->plane_y * MOVE_SPEED;
+	}
+
 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_D))
-		printf("s");
-		//sdfs
+	{
+	
+		rc->pos_x += rc->plane_x * MOVE_SPEED;
+		rc->pos_y += rc->plane_y * MOVE_SPEED;
+	}
+
  	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_RIGHT))
  		{
 			double	x;
