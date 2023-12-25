@@ -11,9 +11,9 @@
  	
 	t_cube*cube = get_cube();
 	t_raycast *rc = cube->raycast;
- 	//t_cube *cube = get_cube();
- 	// if (keydata.key == MLX_KEY_ESCAPE)
- 	 //	mlx_close_window(map->m_pack->mlx);
+
+ 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_ESCAPE))
+ 	 	mlx_close_window(cube->cubmlx->mlx);
 
  	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_W))
  	{
