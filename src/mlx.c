@@ -1,11 +1,5 @@
 #include "cub3d.h"
 
-
-
-
-
-
-
 void  display_background(t_cube *cube)
 {
 	int x;
@@ -35,21 +29,15 @@ void  display_background(t_cube *cube)
 	}
 }
 
-
-
 int	translate_color(int r, int g, int b, int alpha)
 {
 	return (r << 24 | g << 16 | b << 8 | alpha);
 }
 
-
-
 int	mlx_start(t_cube *cube)
 {
 	cube->cubmlx->ceiling_color = translate_color(cube->c_red, cube->c_green, cube->c_blue, 255);
 	cube->cubmlx->floor_color = translate_color(cube->f_red, cube->f_green, cube->f_blue, 255);
-
-
 	cube->cubmlx->mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "CUB3D by TDA-3D", false);
 	if(!cube->cubmlx->mlx)
 		return 1; 
@@ -88,6 +76,3 @@ int	mlx_start(t_cube *cube)
 	//free mlx stuff and add in error function
 	return (EXIT_SUCCESS);
 }
-
-
-

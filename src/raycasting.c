@@ -38,7 +38,8 @@
 		printf("s");
 		//fdsf
 	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_D))
-		printf("s");
+		;
+		// printf("s");
 		//sdfs
  	if (mlx_is_key_down(cube->cubmlx->mlx, MLX_KEY_RIGHT))
  		{
@@ -83,6 +84,30 @@ void set_raycast_vars(t_raycast*rc)
 
 
 }
+
+
+static void texture_loop(t_cube *cube, int y, int x, t_raycast *rc)
+{
+	unsigned int pixel_color;
+
+	while (y < rc->draw_end) 
+	{
+		if(rc->side == 0)
+			pixel_color = COLOR_NORTH;
+		else if(rc->side == 1)
+				pixel_color = COLOR_SOUTH;
+		else if(rc->side == 2)
+				pixel_color = COLOR_EAST;
+		else if(rc->side == 3)
+				pixel_color = COLOR_WEST;
+		else
+			pixel_color = 0;
+		mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
+		y++;
+	}
+}
+
+
 
 void raycasting_loop(void *arg)
 {
@@ -132,7 +157,7 @@ void raycasting_loop(void *arg)
  	rc->hit = 0; 
 	rc->side = 0;
 
-	while (1)
+	while (true)
 	{
 		if(cube->map[rc->map_y][rc->map_x] == '1') 
 			break ;
@@ -183,29 +208,30 @@ void raycasting_loop(void *arg)
 
 		//------------------------------------------------------------------
 
-		y = rc->draw_start;
+		// y = rc->draw_start;
 
-		while (y < rc->draw_end) 
-		{
-			unsigned int pixel_color;
+		// while (y < rc->draw_end) 
+		// {
+		// 	unsigned int pixel_color;
 
-			if(rc->side == 0)
-				pixel_color = COLOR_NORTH;
+		// 	if(rc->side == 0)
+		// 		pixel_color = COLOR_NORTH;
 
-			else if(rc->side == 1)
-					pixel_color = COLOR_SOUTH;
+		// 	else if(rc->side == 1)
+		// 			pixel_color = COLOR_SOUTH;
 
-			else if(rc->side == 2)
-					pixel_color = COLOR_EAST;
+		// 	else if(rc->side == 2)
+		// 			pixel_color = COLOR_EAST;
 
-			else if(rc->side == 3)
-					pixel_color = COLOR_WEST;
-			else
-				pixel_color = 0;
-			mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
+		// 	else if(rc->side == 3)
+		// 			pixel_color = COLOR_WEST;
+		// 	else
+		// 		pixel_color = 0;
+		// 	mlx_put_pixel(cube->cubmlx->img_buf, x, y, pixel_color);
 
-			y++;
-		}
+		// 	y++;
+		// }
+		texture_loop(cube, rc->draw_start, x,rc);
 
 		key_hook();
 		//printf("dir x %f dir y %f plane x %f plane y %f\n",rc->dir_x,rc->dir_y,rc->plane_x,rc->plane_y);
