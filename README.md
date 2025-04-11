@@ -25,3 +25,27 @@ Cub3D is a 3D raycasting engine that simulates a first-person view of a 3D world
 ---
 
 ## **Features**
+
+- **Raycasting Engine:** Render 3D world from a 2D map using raycasting.
+- **Simple Graphics:** Walls and floor are drawn using basic textures.
+- **First-Person View:** Navigate the world in first-person with keyboard and mouse controls.
+- **Minimap:** A mini overview of the world as a 2D map.
+- **FPS Display:** Display the frame rate for optimization and performance analysis.
+
+---
+
+## **Requirements**
+
+Before you can run the project, make sure you have the following installed:
+
+- **OS:** Linux, macOS, or Windows (via WSL)
+- **Compiler:** GCC or Clang
+- **Libraries:**
+  - [MinilibX](https://github.com/42Paris/minilibx) (for graphics rendering)
+  - [X11](https://www.x.org/wiki/) (Linux only)
+  - [Make](https://www.gnu.org/software/make/)
+  
+You can check your installation using the following commands:
+```bash
+gcc --version
+make --version
